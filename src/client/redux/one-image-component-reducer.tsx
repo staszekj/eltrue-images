@@ -1,7 +1,6 @@
 import {produce} from "immer";
 import {createReducer} from "typesafe-actions";
 import {TRootAction} from "./root-action";
-import {TSearchCompoment} from '../../common/search-component'
 import {searchComponentSelectOneImageAction, searchComponentTypingAction} from '../view/app-actions'
 
 export interface TOneImageComponentReducer {
@@ -9,7 +8,7 @@ export interface TOneImageComponentReducer {
 }
 
 export const initialState: TOneImageComponentReducer = {
-    arrayId: 500
+    arrayId: 2
 };
 
 export const oneImageComponentReducer = createReducer<TOneImageComponentReducer, TRootAction>(

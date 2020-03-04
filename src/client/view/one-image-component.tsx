@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useState} from 'react'
 import classnames from 'classnames';
-import {MdDelete, MdZoomOutMap, MdArrowForward, MdArrowBack} from 'react-icons/md';
+import {MdDelete, MdZoomOutMap, MdArrowForward, MdArrowBack, MdClose} from 'react-icons/md';
 import {getOneImage, getNextOneImage, getPrevOneImage} from '../view/app-selectors'
 
 import {useRef, useEffect} from 'react';
@@ -29,16 +29,19 @@ export const OneImageComponent: FunctionComponent<{}> = () => {
 
     return (
         <div className={"one-image-component"}>
-            <img ref={imgRef}/>
-            <div className={"details"}>
-                <span className={classnames("details-content", "title")}>{"Abc Cde"}</span>
-                <span className={classnames("details-content", "info")}>{"1230 x 456"}</span>
-            </div>
-            <div className={"right-toolbar"}>
-                <div className={classnames("right-toolbar-content", "icon-1")}><MdArrowForward/></div>
-            </div>
-            <div className={"left-toolbar"}>
-                <div className={classnames("left-toolbar-content", "icon-1")}><MdArrowBack/></div>
+            <div className={"one-image"}>
+                <img ref={imgRef}/>
+                <div className={classnames("close-icon")}><MdClose/></div>
+                <div className={"details"}>
+                    <span className={classnames("details-content", "title")}>{"Abc Cde"}</span>
+                    <span className={classnames("details-content", "info")}>{"1230 x 456"}</span>
+                </div>
+                <div className={"right-toolbar"}>
+                    <div className={classnames("right-toolbar-content", "icon-1")}><MdArrowForward/></div>
+                </div>
+                <div className={"left-toolbar"}>
+                    <div className={classnames("left-toolbar-content", "icon-1")}><MdArrowBack/></div>
+                </div>
             </div>
         </div>
     );
