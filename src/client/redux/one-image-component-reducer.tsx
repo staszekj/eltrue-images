@@ -8,7 +8,7 @@ export interface TOneImageComponentReducer {
 }
 
 export const initialState: TOneImageComponentReducer = {
-    arrayId: 2
+    arrayId: 3
 };
 
 export const oneImageComponentReducer = createReducer<TOneImageComponentReducer, TRootAction>(

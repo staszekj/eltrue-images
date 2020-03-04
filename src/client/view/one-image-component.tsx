@@ -29,9 +29,9 @@ export const OneImageComponent: FunctionComponent<{}> = () => {
 
     return (
         <div className={"one-image-component"}>
+            <div className={classnames("close-icon")}><MdClose/></div>
             <div className={"one-image"}>
                 <img ref={imgRef}/>
-                <div className={classnames("close-icon")}><MdClose/></div>
                 <div className={"details"}>
                     <span className={classnames("details-content", "title")}>{"Abc Cde"}</span>
                     <span className={classnames("details-content", "info")}>{"1230 x 456"}</span>
