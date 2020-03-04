@@ -1,15 +1,12 @@
 import {ActionType} from "typesafe-actions";
 import {call, put, select} from 'redux-saga/effects'
 import {
-    searchComponentTypingAction,
     fetchImageMeta,
     appInitAction,
     tileImageComponentDeleteAction,
     deleteImage
 } from "../view/app-actions";
-import path from 'path'
 import {TSearchEndpointRequest, TSearchEndpointResponse} from "../../common/search-endpoint";
-import json from '../../common/images.json'
 import {getSearchComponentInputString} from "../view/app-selectors";
 import {IMAGE_INFO_DELETE_ENDPOINT_PATH, IMAGE_INFO_SEARCH_ENDPOINT_PATH} from '../../common/endpoints'
 import axios from 'axios';
@@ -17,7 +14,7 @@ import {TDeleteEndpointRequest, TDeleteEndpointResponse} from "../../common/dele
 
 
 export const httpFetchImageInfo = async (request: TSearchEndpointRequest) => {
-    const serverResponse = await axios.put<TSearchEndpointResponse>(IMAGE_INFO_SEARCH_ENDPOINT_PATH, request)
+    const serverResponse = await axios.post<TSearchEndpointResponse>(IMAGE_INFO_SEARCH_ENDPOINT_PATH, request)
     return serverResponse.data;
 };
 

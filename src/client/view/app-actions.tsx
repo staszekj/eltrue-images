@@ -2,6 +2,7 @@ import {createStandardAction, createAsyncAction} from "typesafe-actions";
 import {TSearchCompoment} from "../../common/search-component";
 import {TSearchEndpointRequest, TSearchEndpointResponse} from "../../common/search-endpoint";
 import {TDeleteEndpointRequest, TDeleteEndpointResponse} from "../../common/delete-endpoint";
+import {TOneImageComponentReducer} from "../redux/one-image-component-reducer";
 
 
 export const appInitAction = createStandardAction(
@@ -11,6 +12,10 @@ export const appInitAction = createStandardAction(
 export const searchComponentTypingAction = createStandardAction(
     "search-component/TYPING"
 )<Pick<TSearchCompoment, "inputString">>();
+
+export const searchComponentSelectOneImageAction = createStandardAction(
+    "search-component/SELECT_ONE_IMAGE"
+)<TOneImageComponentReducer>();
 
 export const tileImageComponentDeleteAction = createStandardAction(
     "tile-image-component/DELETE"

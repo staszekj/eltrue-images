@@ -35,7 +35,7 @@ app.use(bodyParser.json());
 app.use(PUBLIC_CTX_PATH, express.static("public"));
 app.use('/', express.static("build"));
 
-app.put<{}, TSearchEndpointResponse, TSearchEndpointRequest>(IMAGE_INFO_SEARCH_ENDPOINT_PATH, (req, res) => {
+app.post<{}, TSearchEndpointResponse, TSearchEndpointRequest>(IMAGE_INFO_SEARCH_ENDPOINT_PATH, (req, res) => {
     const found = _.filter(json, it => _.includes(it.author.toLowerCase(), req.body.search.toLocaleLowerCase()));
     const results = _.map(found, (item => {
         return {
