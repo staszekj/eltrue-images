@@ -2,7 +2,7 @@ import React, {FunctionComponent, useState} from 'react'
 import classnames from 'classnames';
 import {MdDelete, MdZoomOutMap} from 'react-icons/md';
 
-import {useRef, useEffect} from 'react';
+import {useRef} from 'react';
 import {useDispatch} from 'react-redux';
 
 import "./tile-image-component.scss"
@@ -36,8 +36,6 @@ export const TileImageComponent: FunctionComponent<TTileImageComponentProps> = (
         const imgEl = imgRef.current;
         if (imgEl) {
             imgEl.src = downloadUrl;
-            imgEl.style.width = 'auto';
-            imgEl.style.height = 'auto';
         }
     }
 
@@ -45,7 +43,9 @@ export const TileImageComponent: FunctionComponent<TTileImageComponentProps> = (
     return (
         <div className={"tile-image-component"}>
             <VisibilitySensor partialVisibility={true} onChange={onVisibleChangeHandler}>
-                <img ref={imgRef} style={{width: width, height: height}} alt={title}/>
+                <div style={{width: width, height: height}}>
+                    <img ref={imgRef} alt={title}/>
+                </div>
             </VisibilitySensor>
             <div className={"details"}>
                 <span className={classnames("details-content", "title")}>{title}</span>

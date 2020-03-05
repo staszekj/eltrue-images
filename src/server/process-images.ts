@@ -35,7 +35,7 @@ export const downloadImages = async () => {
     fs.mkdirSync(imagesDirPth);
     return Promise.all(_.map(json, (i) => {
         const imagePth = path.join(imagesDirPth, `${i.id}.jpg`);
-        return download(i.download_url, imagePth)
+        return download(i.urls.full, imagePth)
     }))
 };
 
@@ -57,4 +57,18 @@ export const resize = async () => {
         const destImagePth = path.join(imagesV300DirPth, `${i.id}.jpg`);
         return jimpResize(sourceImagePth, destImagePth, widthV300);
     }))
+};
+
+export const preProcessImages = () => {
+    console.log("Image downloading. Please wait...");
+    downloadImages()
+        .then(() => {
+            console.log("Resizing. Please wait...");
+        })
+        .then(() => {
+            return resize()
+        })
+        .then(() => {
+            console.log("SERVER IS READY :-)");
+        });
 };

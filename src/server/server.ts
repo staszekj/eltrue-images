@@ -1,34 +1,59 @@
 import express from 'express';
 import cors from 'cors'
-import path from 'path'
 import bodyParser from 'body-parser';
-import {downloadImages, resize} from './process-images'
 import {TSearchEndpointRequest, TSearchEndpointResponse} from "../common/search-endpoint";
 import _ from "lodash";
-import json from "../common/images.json";
+import fs from 'fs';
 import {calcWidth} from "./calc-width";
 import {
     PUBLIC_CTX_PATH,
     IMAGE_INFO_SEARCH_ENDPOINT_PATH,
-    PUBLIC_IMAGE_V300,
     IMAGE_INFO_DELETE_ENDPOINT_PATH
 } from "../common/endpoints"
-import {TDeleteEndpointRequest, TDeleteEndpointResponse} from "../common/delete-endpoint";
 
+import {TDeleteEndpointRequest, TDeleteEndpointResponse} from "../common/delete-endpoint";
+import Unsplash, {toJson} from 'unsplash-js';
+import "isomorphic-fetch"
+
+export const unsplashJsonPath = './data/unsplash.json';
 export const PORT = 8000;
 export const app = express();
+export const v300QueryString = '&h=300&fit=max';
 
-console.log("Image downloading. Please wait...");
-downloadImages()
-    .then(() => {
-        console.log("Resizing. Please wait...");
-    })
-    .then(() => {
-        return resize()
-    })
-    .then(() => {
-        console.log("SERVER IS READY :-)");
+//
+// load image metadata from:
+// https://images.unsplash.com/
+//
+let metaImagesDatabase: any[] = [];
+
+if (fs.existsSync(unsplashJsonPath)) {
+    metaImagesDatabase = JSON.parse(fs.readFileSync(unsplashJsonPath).toString());
+    console.log(metaImagesDatabase.length + " elements have been read from: " + unsplashJsonPath);
+} else {
+    const promises: Promise<any>[] = [];
+    const unsplash = new Unsplash({accessKey: "ddQIP6_Y11G_Ft8NVC4q4iVHEyXhkQDsT-KoQeOIqNs"});
+    _.range(1, 21).forEach((i) => {
+        promises.push(
+            unsplash.search.photos("cat", i, 30)
+                .then(toJson)
+                .then((data: any) => {
+                    metaImagesDatabase.push(...data.results);
+                    console.log(`Response for page number: ${i}, page size: ${data.results.length}, current total: ${metaImagesDatabase.length}`);
+                }))
     });
+    Promise.all(promises)
+        .then(() => {
+            fs.writeFileSync(unsplashJsonPath, JSON.stringify(metaImagesDatabase))
+        });
+}
+
+//
+// Images Preprocessing
+//
+// I commented it out because https://images.unsplash.com/ already provides preprocessed images
+// if you add '&h=300&fit=max' to image url
+//
+//preProcessImages();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -36,15 +61,15 @@ app.use(PUBLIC_CTX_PATH, express.static("public"));
 app.use('/', express.static("build"));
 
 app.post<{}, TSearchEndpointResponse, TSearchEndpointRequest>(IMAGE_INFO_SEARCH_ENDPOINT_PATH, (req, res) => {
-    const found = _.filter(json, it => _.includes(it.author.toLowerCase(), req.body.search.toLocaleLowerCase()));
+    const found = _.filter(metaImagesDatabase, it => _.includes(it.user.name.toLowerCase(), req.body.search.toLocaleLowerCase()));
     const results = _.map(found, (item => {
         return {
             id: item.id,
-            downloadUrl: item.download_url,
+            downloadUrl: item.urls.full,
             width: item.width,
             height: item.height,
-            author: item.author,
-            imageV300Url:  path.join(PUBLIC_IMAGE_V300, `${item.id}.jpg`),
+            author: item.user.name,
+            imageV300Url: item.urls.full + v300QueryString,
             widthV300: calcWidth(300, item.width, item.height)
         }
     }));
@@ -53,13 +78,13 @@ app.post<{}, TSearchEndpointResponse, TSearchEndpointRequest>(IMAGE_INFO_SEARCH_
 
 app.delete<TDeleteEndpointRequest, TDeleteEndpointResponse, {}>(IMAGE_INFO_DELETE_ENDPOINT_PATH + '/:id', (req, res) => {
     const id = req.params.id;
-    _.remove(json, {"id": id});
-    const resB = {id}
-    console.log(resB)
+    _.remove(metaImagesDatabase, {"id": id});
     res.send({id})
 });
 
 app.listen(PORT);
+
+console.log(`Server is started on port ${PORT}`);
 
 
 
