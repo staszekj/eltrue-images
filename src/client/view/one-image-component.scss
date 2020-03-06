@@ -3,15 +3,23 @@
   justify-content: center;
   align-items: center;
 
-  .close-icon {
-    font-size: 50px;
-    padding: 10px;
-    color: red;
+  .toolbar {
     position: absolute;
     right: 0;
-    top: 0;
-    z-index: 3;
-    cursor: pointer;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+
+    .close-icon,
+    .edit-icon,
+    .delete-icon {
+      font-size: 32px;
+      color: black;
+      right: 0;
+      top: 0;
+      z-index: 3;
+      cursor: pointer;
+    }
   }
 
   .one-image {

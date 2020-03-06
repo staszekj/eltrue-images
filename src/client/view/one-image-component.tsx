@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from 'react'
 import classnames from 'classnames';
-import {MdArrowForward, MdArrowBack, MdClose} from 'react-icons/md';
+import {MdArrowForward, MdArrowBack, MdClose, MdEdit, MdDelete} from 'react-icons/md';
 
 import {useRef, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -17,6 +17,7 @@ import {getNextArrayId, getPrevArrayId} from "./app-selectors";
 export interface TOneImageComponentProp {
     image: TImageMeta;
 }
+
 export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({image}) => {
 
     const prevArrayId = useSelector(getPrevArrayId);
@@ -33,7 +34,7 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
             const img = new Image();
             img.src = image.downloadUrl;
             img.onload = () => {
-                if(imgEl.src === image.imageV300Url) {
+                if (imgEl.src === image.imageV300Url) {
                     imgEl.src = image.downloadUrl;
                 }
             };
@@ -43,17 +44,23 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
     return (
         <div className={"one-image-component"}>
             <div className={"one-image"}>
-                <div className={classnames("close-icon")} onClick={onCloseBtnClick}><MdClose/></div>
+                <div className={classnames("toolbar")}>
+                    <div className={classnames("close-icon")} onClick={onCloseBtnClick}><MdClose/></div>
+                    <div className={classnames("edit-icon")} onClick={onCloseBtnClick}><MdEdit/></div>
+                    <div className={classnames("delete-icon")} onClick={onCloseBtnClick}><MdDelete/></div>
+                </div>
                 <img ref={imgRef} src={image.imageV300Url}/>
                 <div className={"details"}>
                     <span className={classnames("details-content", "title")}>{image.author}</span>
                     <span className={classnames("details-content", "info")}>{`${image.width} x ${image.height}`}</span>
                 </div>
                 <div className={"right-toolbar"}>
-                    <div className={classnames("right-toolbar-content", "icon-1")} onClick={() => onForwardBtnClick()}><MdArrowForward/></div>
+                    <div className={classnames("right-toolbar-content", "icon-1")} onClick={() => onForwardBtnClick()}>
+                        <MdArrowForward/></div>
                 </div>
                 <div className={"left-toolbar"}>
-                    <div className={classnames("left-toolbar-content", "icon-1")} onClick={() => onPrevBtnClick()}><MdArrowBack/></div>
+                    <div className={classnames("left-toolbar-content", "icon-1")} onClick={() => onPrevBtnClick()}>
+                        <MdArrowBack/></div>
                 </div>
             </div>
         </div>
