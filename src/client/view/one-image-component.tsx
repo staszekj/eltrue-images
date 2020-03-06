@@ -1,8 +1,6 @@
-import React, {FunctionComponent} from 'react'
+import React, {FunctionComponent, useEffect, useRef, useState} from 'react'
 import classnames from 'classnames';
-import {MdArrowForward, MdArrowBack, MdClose, MdEdit, MdDelete} from 'react-icons/md';
-
-import {useRef, useEffect} from 'react';
+import {MdArrowBack, MdArrowForward, MdClose, MdDelete, MdEdit} from 'react-icons/md';
 import {useDispatch, useSelector} from 'react-redux';
 
 import "./one-image-component.scss"
@@ -10,9 +8,11 @@ import {TImageMeta} from "../../common/search-endpoint";
 import {
     oneImageComponentBackwardClickAction,
     oneImageComponentCloseClickAction,
+    oneImageComponentEnterTitleAction,
     oneImageComponentForwardClickAction
 } from "./app-actions";
 import {getNextArrayId, getPrevArrayId} from "./app-selectors";
+import {EditableText} from "./widgets/editable-text-widget";
 
 export interface TOneImageComponentProp {
     image: TImageMeta;
@@ -20,12 +20,23 @@ export interface TOneImageComponentProp {
 
 export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({image}) => {
 
+    const [isAuthorEditMode, setAuthorEditMode] = useState<boolean>(true);
+    const [currentAuthor, setCurrentAuthor] = useState<string>(image.author);
     const prevArrayId = useSelector(getPrevArrayId);
     const nextArrayId = useSelector(getNextArrayId);
     const dispatch = useDispatch();
+
     const onCloseBtnClick = () => dispatch(oneImageComponentCloseClickAction());
     const onForwardBtnClick = () => dispatch(oneImageComponentForwardClickAction({arrayId: nextArrayId}));
     const onPrevBtnClick = () => dispatch(oneImageComponentBackwardClickAction({arrayId: prevArrayId}));
+    const onEditBtnClick = () => {
+        setAuthorEditMode(true)
+    };
+    const onEnterTitle = () => {
+        setAuthorEditMode(false);
+        dispatch(oneImageComponentEnterTitleAction({id: image.id, author: currentAuthor}));
+    };
+
     const imgRef = useRef<HTMLImageElement>(null);
 
     useEffect(() => {
@@ -46,12 +57,17 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
             <div className={"one-image"}>
                 <div className={classnames("toolbar")}>
                     <div className={classnames("close-icon")} onClick={onCloseBtnClick}><MdClose/></div>
-                    <div className={classnames("edit-icon")} onClick={onCloseBtnClick}><MdEdit/></div>
+                    <div className={classnames("edit-icon")} onClick={onEditBtnClick}><MdEdit/></div>
                     <div className={classnames("delete-icon")} onClick={onCloseBtnClick}><MdDelete/></div>
                 </div>
                 <img ref={imgRef} src={image.imageV300Url}/>
                 <div className={"details"}>
-                    <span className={classnames("details-content", "title")}>{image.author}</span>
+                    <EditableText text={currentAuthor} isEdit={isAuthorEditMode}
+                                  classNames={classnames("details-content", "title")}
+                                  onEnter={onEnterTitle}
+                                  onChange={(text) => setCurrentAuthor(text)}
+                                  onTextClick={() => setAuthorEditMode(true)}>
+                    </EditableText>
                     <span className={classnames("details-content", "info")}>{`${image.width} x ${image.height}`}</span>
                 </div>
                 <div className={"right-toolbar"}>

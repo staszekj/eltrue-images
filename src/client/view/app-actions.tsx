@@ -1,6 +1,6 @@
 import {createStandardAction, createAsyncAction} from "typesafe-actions";
 import {TSearchCompoment} from "../../common/search-component";
-import {TSearchEndpointRequest, TSearchEndpointResponse} from "../../common/search-endpoint";
+import {TImageMeta, TSearchEndpointRequest, TSearchEndpointResponse} from "../../common/search-endpoint";
 import {TDeleteEndpointRequest, TDeleteEndpointResponse} from "../../common/delete-endpoint";
 import {TOneImageComponentReducer} from "../redux/one-image-component-reducer";
 
@@ -50,3 +50,7 @@ export const oneImageComponentForwardClickAction = createStandardAction(
 export const oneImageComponentBackwardClickAction = createStandardAction(
     "one-image-component/BACKWARD_CLICK"
 )<TOneImageComponentReducer>();
+
+export const oneImageComponentEnterTitleAction = createStandardAction(
+    "one-image-component/ENTER_TITLE"
+)<Pick<TImageMeta, "id" | "author">>();

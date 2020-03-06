@@ -1,0 +1,15 @@
+.editable-text {
+
+  input {
+    border-radius: 15px 50px 30px;
+    border: 2px solid black;
+    padding: 20px;
+    width: 200px;
+    height: 15px;
+  }
+
+  input:focus{
+    outline: none;
+  }
+
+}
