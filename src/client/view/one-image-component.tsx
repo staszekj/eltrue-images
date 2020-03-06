@@ -31,12 +31,12 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
 
     return (
         <div className={"one-image-component"}>
-            <div className={classnames("close-icon")} onClick={onCloseBtnClick}><MdClose/></div>
             <div className={"one-image"}>
+                <div className={classnames("close-icon")} onClick={onCloseBtnClick}><MdClose/></div>
                 <img ref={imgRef} src={image.imageV300Url}/>
                 <div className={"details"}>
-                    <span className={classnames("details-content", "title")}>{"Abc Cde"}</span>
-                    <span className={classnames("details-content", "info")}>{"1230 x 456"}</span>
+                    <span className={classnames("details-content", "title")}>{image.author}</span>
+                    <span className={classnames("details-content", "info")}>{`${image.width} x ${image.height}`}</span>
                 </div>
                 <div className={"right-toolbar"}>
                     <div className={classnames("right-toolbar-content", "icon-1")}><MdArrowForward/></div>

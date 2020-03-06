@@ -28,17 +28,17 @@ let metaImagesDatabase: any[] = [];
 
 if (fs.existsSync(unsplashJsonPath)) {
     metaImagesDatabase = JSON.parse(fs.readFileSync(unsplashJsonPath).toString());
-    console.log(metaImagesDatabase.length + " elements have been read from: " + unsplashJsonPath);
+    console.log('--> ' + metaImagesDatabase.length + " elements have been read from: " + unsplashJsonPath);
 } else {
     const promises: Promise<any>[] = [];
     const unsplash = new Unsplash({accessKey: "ddQIP6_Y11G_Ft8NVC4q4iVHEyXhkQDsT-KoQeOIqNs"});
     _.range(1, 21).forEach((i) => {
         promises.push(
-            unsplash.search.photos("cat", i, 30)
+            unsplash.search.photos("dog", i, 30)
                 .then(toJson)
                 .then((data: any) => {
                     metaImagesDatabase.push(...data.results);
-                    console.log(`Response for page number: ${i}, page size: ${data.results.length}, current total: ${metaImagesDatabase.length}`);
+                    console.log(`--> Response for page number: ${i}, page size: ${data.results.length}, current total: ${metaImagesDatabase.length}`);
                 }))
     });
     Promise.all(promises)

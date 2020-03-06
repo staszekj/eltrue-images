@@ -1,5 +1,5 @@
 import {ActionType} from "typesafe-actions";
-import {call, put, select} from 'redux-saga/effects'
+import {call, put, select, delay} from 'redux-saga/effects'
 import {
     fetchImageMeta,
     appInitAction,
@@ -48,6 +48,7 @@ export function* searchComponentTypingSaga() {
         const request: TSearchEndpointRequest = {
             search: inputString
         };
+        yield delay(500);
         yield put(
             fetchImageMeta.request(request)
         );

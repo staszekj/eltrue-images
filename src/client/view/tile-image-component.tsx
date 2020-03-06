@@ -6,7 +6,11 @@ import {useRef} from 'react';
 import {useDispatch} from 'react-redux';
 
 import "./tile-image-component.scss"
-import {searchComponentSelectOneImageAction, tileImageComponentDeleteAction} from "./app-actions";
+import {
+    searchComponentPictureClickAction,
+    searchComponentSelectOneImageAction,
+    tileImageComponentDeleteAction
+} from "./app-actions";
 import VisibilitySensor from 'react-visibility-sensor';
 
 export type TTileImageComponentProps = {
@@ -27,6 +31,7 @@ export const TileImageComponent: FunctionComponent<TTileImageComponentProps> = (
     const {downloadUrl, width, height, title, info, id, arrayId} = props;
     const onDeleteBtnClick = () => dispatch(tileImageComponentDeleteAction({id}));
     const onZoomOutBtnClick = () => dispatch(searchComponentSelectOneImageAction({arrayId}));
+    const onPictureClick = () => dispatch(searchComponentPictureClickAction({arrayId}));
 
     const onVisibleChangeHandler = (isVisible: boolean) => {
         if (isVisible) {
@@ -46,7 +51,7 @@ export const TileImageComponent: FunctionComponent<TTileImageComponentProps> = (
         <div className={"tile-image-component"}>
             <VisibilitySensor partialVisibility={true} onChange={onVisibleChangeHandler}>
                 <div style={{width: width, height: height}}>
-                    <img ref={imgRef} alt={title}/>
+                    <img ref={imgRef} alt={title} onClick={onPictureClick}/>
                 </div>
             </VisibilitySensor>
             <div className={"details"}>

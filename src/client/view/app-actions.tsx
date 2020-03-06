@@ -17,6 +17,10 @@ export const searchComponentSelectOneImageAction = createStandardAction(
     "search-component/SELECT_ONE_IMAGE"
 )<TOneImageComponentReducer>();
 
+export const searchComponentPictureClickAction = createStandardAction(
+    "search-component/PICTURE_CLICK"
+)<TOneImageComponentReducer>();
+
 export const tileImageComponentDeleteAction = createStandardAction(
     "tile-image-component/DELETE"
 )<Pick<TDeleteEndpointRequest, "id">>();
