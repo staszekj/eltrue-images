@@ -1,4 +1,12 @@
 .editable-text {
+  @keyframes spinner {
+    0% {
+      transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    }
+    100% {
+      transform: translate3d(-50%, -50%, 0) rotate(360deg);
+    }
+  }
 
   input {
     border-radius: 15px 50px 30px;
@@ -10,6 +18,32 @@
 
   input:focus{
     outline: none;
+  }
+
+  .spinner-wrapper {
+    position: relative;
+
+    .spinner {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+
+
+      &::before {
+        animation: 1.5s linear infinite spinner;
+        border: solid 3px #eee;
+        border-bottom-color: red;
+        border-radius: 50%;
+        content: "";
+        height: 20px;
+        opacity: inherit;
+        position: absolute;
+        transform: translate3d(-50%, -50%, 0);
+        transform-origin: center;
+        width: 20px;
+        will-change: transform;
+      }
+    }
   }
 
 }

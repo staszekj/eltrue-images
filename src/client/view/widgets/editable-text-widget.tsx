@@ -23,17 +23,20 @@ export const EditableText: FunctionComponent<TEditableTextWidget> = ({text, isEd
 
     return (
         <div className={classnames("editable-text", classNames)}>
-            <input type="text" value={text}
-                   onChange={(e) => onChange && onChange(e.target.value)}
-                   onKeyUp={(e) => {
-                       console.log(e.keyCode);
-                       if(e.keyCode === 13) {
-                           e.preventDefault();
-                           onEnter && onEnter()
-                       }
-                   }}
-                   onBlur={() => onEnter && onEnter()}
-            />
+            <div className={"spinner-wrapper"}>
+                <div className={"spinner"}/>
+                <input type="text" value={text}
+                       onChange={(e) => onChange && onChange(e.target.value)}
+                       onKeyUp={(e) => {
+                           console.log(e.keyCode);
+                           if (e.keyCode === 13) {
+                               e.preventDefault();
+                               onEnter && onEnter()
+                           }
+                       }}
+                       onBlur={() => onEnter && onEnter()}
+                />
+            </div>
         </div>
     )
 };
