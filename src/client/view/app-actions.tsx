@@ -34,3 +34,7 @@ export const deleteImage = createAsyncAction(
     'delete-endpoint/FAILURE',
     'delete-endpoint/CANCEL'
 )<TDeleteEndpointRequest, TDeleteEndpointResponse, {}, {}>();
+
+export const oneImageComponentCloseClickAction = createStandardAction(
+    "one-image-component/CLOSE_CLICK"
+)();

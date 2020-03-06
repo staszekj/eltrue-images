@@ -6,7 +6,7 @@ import {useRef} from 'react';
 import {useDispatch} from 'react-redux';
 
 import "./tile-image-component.scss"
-import {tileImageComponentDeleteAction} from "./app-actions";
+import {searchComponentSelectOneImageAction, tileImageComponentDeleteAction} from "./app-actions";
 import VisibilitySensor from 'react-visibility-sensor';
 
 export type TTileImageComponentProps = {
@@ -16,6 +16,7 @@ export type TTileImageComponentProps = {
     height: number,
     title: string,
     info: string,
+    arrayId: number
 }
 
 export const TileImageComponent: FunctionComponent<TTileImageComponentProps> = (props) => {
@@ -23,8 +24,9 @@ export const TileImageComponent: FunctionComponent<TTileImageComponentProps> = (
     const dispatch = useDispatch();
     const [isVisible, setVisible] = useState(false);
     const imgRef = useRef<HTMLImageElement>(null);
-    const {downloadUrl, width, height, title, info, id} = props;
+    const {downloadUrl, width, height, title, info, id, arrayId} = props;
     const onDeleteBtnClick = () => dispatch(tileImageComponentDeleteAction({id}));
+    const onZoomOutBtnClick = () => dispatch(searchComponentSelectOneImageAction({arrayId}));
 
     const onVisibleChangeHandler = (isVisible: boolean) => {
         if (isVisible) {
@@ -52,7 +54,7 @@ export const TileImageComponent: FunctionComponent<TTileImageComponentProps> = (
                 <span className={classnames("details-content", "info")}>{info}</span>
             </div>
             <div className={"toolbar"}>
-                <div className={classnames("toolbar-content", "icon-1")}><MdZoomOutMap/></div>
+                <div className={classnames("toolbar-content", "icon-1")} onClick={onZoomOutBtnClick}><MdZoomOutMap/></div>
                 <div className={classnames("toolbar-content", "icon-2")} onClick={onDeleteBtnClick}><MdDelete/></div>
             </div>
         </div>

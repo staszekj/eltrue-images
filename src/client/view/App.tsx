@@ -6,23 +6,23 @@ import {useDispatch, useSelector} from "react-redux";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {appInitAction} from "./app-actions";
 import {OneImageComponent} from "./one-image-component";
-import {getOneImage, isOneImage} from "./app-selectors";
+import {getOneImage} from "./app-selectors";
 
 import './app.scss'
 
 const App: FunctionComponent<{}> = () => {
 
     const dispatch = useDispatch();
-    const isOneImageComponent = useSelector(isOneImage);
+    const oneImage = useSelector(getOneImage);
 
     useEffect(() => {
         dispatch(appInitAction());
     }, []);
 
 
-    if (isOneImageComponent) {
+    if (oneImage) {
         return (
-            <OneImageComponent/>
+            <OneImageComponent image={oneImage}/>
         )
     }
 

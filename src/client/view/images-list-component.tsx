@@ -10,7 +10,7 @@ export const ImagesListComponent: FunctionComponent<{}> = () => {
     const founded = useSelector(getFoundImages);
     return (
         <div className={"images-list-component"}>
-            {_.map(founded, i => {
+            {_.map(founded, (i, arrayId) => {
                 const title = i.author;
                 const info = `${i.width} x ${i.height}`;
                 return (
@@ -22,6 +22,7 @@ export const ImagesListComponent: FunctionComponent<{}> = () => {
                         height={300}
                         title={title}
                         info={info}
+                        arrayId={arrayId}
                     />
                 )
             })}
