@@ -42,3 +42,11 @@ export const deleteImage = createAsyncAction(
 export const oneImageComponentCloseClickAction = createStandardAction(
     "one-image-component/CLOSE_CLICK"
 )();
+
+export const oneImageComponentForwardClickAction = createStandardAction(
+    "one-image-component/FORWARD_CLICK"
+)<TOneImageComponentReducer>();
+
+export const oneImageComponentBackwardClickAction = createStandardAction(
+    "one-image-component/BACKWARD_CLICK"
+)<TOneImageComponentReducer>();
