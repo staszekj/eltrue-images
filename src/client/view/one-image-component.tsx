@@ -24,7 +24,7 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
     const [isAuthorEditMode, setAuthorEditMode] = useState<boolean>(false);
     const [isImageFullyLoaded, setImageFullyLoaded] = useState<boolean>(false);
     const [currentAuthor, setCurrentAuthor] = useState<string>(image.author);
-    const [currentTimout, setCurrentTimeout] = useState<ReturnType<typeof setTimeout>|null>(null);
+    const [currentTimeout, setCurrentTimeout] = useState<ReturnType<typeof setTimeout>|null>(null);
     const [currentId, setCurrentId] = useState<string>(image.id);
     const prevArrayId = useSelector(getPrevArrayId);
     const nextArrayId = useSelector(getNextArrayId);
@@ -59,10 +59,10 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
     useEffect(() => {
         const imageRef = imgRef.current;
         if (imageRef) {
-            if (currentTimout) {
-                clearTimeout(currentTimout)
+            if (currentTimeout) {
+                clearTimeout(currentTimeout)
             }
-            const timer = setTimeout(() => {
+            const delayedFullImageLoading = setTimeout(() => {
                 const imageLoader = new Image();
                 imageLoader.src = image.downloadUrl;
                 imageLoader.onload = () => {
@@ -72,7 +72,7 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
                     }
                 };
             }, 500);
-            setCurrentTimeout(timer);
+            setCurrentTimeout(delayedFullImageLoading)
         }
     }, [image.id]);
 
