@@ -1,5 +1,6 @@
 import {TRootState} from "../redux/root-reducer";
 import _ from 'lodash';
+import {EEndpointStatus} from "../../common/endpoints";
 
 export const getSearchComponentInputString = (state: TRootState) => state.searchComponent.inputString;
 export const getFoundImages = (state: TRootState) => state.searchEndpoint.response;
@@ -13,3 +14,5 @@ export const getPrevArrayId = (state: TRootState) => !_.isNil(state.oneImageComp
     (state.oneImageComponent.arrayId - 1) % getFoundImagesLenght(state) : null;
 export const getNextArrayId = (state: TRootState) => !_.isNil(state.oneImageComponent.arrayId) && getFoundImagesLenght(state) > 0 ?
     (state.oneImageComponent.arrayId + 1) % getFoundImagesLenght(state) : null;
+
+export const isAuthorUpdateRequestPending = (state: TRootState) => state.authorUpdateEndpoint.status === EEndpointStatus.PENDING;

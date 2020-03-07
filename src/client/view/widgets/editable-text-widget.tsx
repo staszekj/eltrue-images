@@ -5,15 +5,18 @@ import './editable-text-widget.scss'
 
 export interface TEditableTextWidget {
     text: string;
-    isEdit: boolean;
+    isInput: boolean;
+    isReadOnly?: boolean;
+    isSpinner?: boolean
     classNames?: string;
     onChange?: (val: string) => void
     onEnter?: () => void
     onTextClick?: () => void
 }
 
-export const EditableText: FunctionComponent<TEditableTextWidget> = ({text, isEdit, classNames, onEnter, onTextClick, onChange}) => {
-    if (!isEdit) {
+export const EditableText: FunctionComponent<TEditableTextWidget> = (props) => {
+    const {text, isInput, classNames, onEnter, onTextClick, onChange, isReadOnly=false, isSpinner=false} = props;
+    if (!isInput) {
         return (
             <span className={classnames("editable-text", classNames)}
                   onClick={() => onTextClick && onTextClick()}>
@@ -21,11 +24,15 @@ export const EditableText: FunctionComponent<TEditableTextWidget> = ({text, isEd
             </span>)
     }
 
+    const spinnerEl = isSpinner && <div className={"spinner"}/>;
+
     return (
         <div className={classnames("editable-text", classNames)}>
             <div className={"spinner-wrapper"}>
-                <div className={"spinner"}/>
-                <input type="text" value={text}
+                {spinnerEl}
+                <input type="text"
+                       readOnly={isReadOnly}
+                       value={text}
                        onChange={(e) => onChange && onChange(e.target.value)}
                        onKeyUp={(e) => {
                            console.log(e.keyCode);

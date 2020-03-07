@@ -88,11 +88,14 @@ app.put<{}, TAuthorUpdateEndpointResponse, TAuthorUpdateEndpointRequest>(IMAGE_I
     const author = req.body.author;
 
     const dataToChange = _.find(metaImagesDatabase, {"id": id});
+
     if (dataToChange) {
         dataToChange.user.name = author;
     }
 
-    res.send({id, author})
+    setTimeout(() => {
+        res.send({id, author});
+    }, 1000);
 });
 
 app.listen(PORT);

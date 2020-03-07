@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useEffect, useRef, useState} from 'react'
 import classnames from 'classnames';
-import {MdArrowBack, MdArrowForward, MdClose, MdDelete, MdEdit} from 'react-icons/md';
+import {MdArrowBack, MdArrowForward, MdClose, MdEdit} from 'react-icons/md';
 import {useDispatch, useSelector} from 'react-redux';
 
 import "./one-image-component.scss"
@@ -11,7 +11,7 @@ import {
     oneImageComponentEnterTitleAction,
     oneImageComponentForwardClickAction
 } from "./app-actions";
-import {getNextArrayId, getPrevArrayId} from "./app-selectors";
+import {getNextArrayId, getPrevArrayId, isAuthorUpdateRequestPending} from "./app-selectors";
 import {EditableText} from "./widgets/editable-text-widget";
 
 export interface TOneImageComponentProp {
@@ -20,22 +20,24 @@ export interface TOneImageComponentProp {
 
 export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({image}) => {
 
-    const [isAuthorEditMode, setAuthorEditMode] = useState<boolean>(true);
+    const [isAuthorEditMode, setAuthorEditMode] = useState<boolean>(false);
     const [currentAuthor, setCurrentAuthor] = useState<string>(image.author);
     const prevArrayId = useSelector(getPrevArrayId);
     const nextArrayId = useSelector(getNextArrayId);
+    const isRequestPending = useSelector(isAuthorUpdateRequestPending);
     const dispatch = useDispatch();
 
     const onCloseBtnClick = () => dispatch(oneImageComponentCloseClickAction());
     const onForwardBtnClick = () => dispatch(oneImageComponentForwardClickAction({arrayId: nextArrayId}));
     const onPrevBtnClick = () => dispatch(oneImageComponentBackwardClickAction({arrayId: prevArrayId}));
     const onEditBtnClick = () => {
-        setAuthorEditMode(true)
+        setAuthorEditMode(!isAuthorEditMode)
     };
     const onEnterTitle = () => {
         setAuthorEditMode(false);
         dispatch(oneImageComponentEnterTitleAction({id: image.id, author: currentAuthor}));
     };
+    const EditableTextString = isAuthorEditMode || isRequestPending ? currentAuthor : image.author;
 
     const imgRef = useRef<HTMLImageElement>(null);
 
@@ -58,11 +60,12 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
                 <div className={classnames("toolbar")}>
                     <div className={classnames("close-icon")} onClick={onCloseBtnClick}><MdClose/></div>
                     <div className={classnames("edit-icon")} onClick={onEditBtnClick}><MdEdit/></div>
-                    <div className={classnames("delete-icon")} onClick={onCloseBtnClick}><MdDelete/></div>
                 </div>
                 <img ref={imgRef} src={image.imageV300Url}/>
                 <div className={"details"}>
-                    <EditableText text={currentAuthor} isEdit={isAuthorEditMode}
+                    <EditableText text={EditableTextString} isInput={isAuthorEditMode || isRequestPending}
+                                  isReadOnly={isRequestPending}
+                                  isSpinner={isRequestPending}
                                   classNames={classnames("details-content", "title")}
                                   onEnter={onEnterTitle}
                                   onChange={(text) => setCurrentAuthor(text)}
