@@ -35,7 +35,6 @@ export const EditableText: FunctionComponent<TEditableTextWidget> = (props) => {
                        value={text}
                        onChange={(e) => onChange && onChange(e.target.value)}
                        onKeyUp={(e) => {
-                           console.log(e.keyCode);
                            if (e.keyCode === 13) {
                                e.preventDefault();
                                onEnter && onEnter()
