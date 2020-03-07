@@ -8,12 +8,13 @@ import {calcWidth} from "./calc-width";
 import {
     PUBLIC_CTX_PATH,
     IMAGE_INFO_SEARCH_ENDPOINT_PATH,
-    IMAGE_INFO_DELETE_ENDPOINT_PATH
+    IMAGE_INFO_DELETE_ENDPOINT_PATH, IMAGE_INFO_PUT_ENDPOINT_PATH
 } from "../common/endpoints"
 
 import {TDeleteEndpointRequest, TDeleteEndpointResponse} from "../common/delete-endpoint";
 import Unsplash, {toJson} from 'unsplash-js';
 import "isomorphic-fetch"
+import {TAuthorUpdateEndpointRequest, TAuthorUpdateEndpointResponse} from "../common/update-endpoint";
 
 export const unsplashJsonPath = './data/unsplash.json';
 export const PORT = 8000;
@@ -80,6 +81,18 @@ app.delete<TDeleteEndpointRequest, TDeleteEndpointResponse, {}>(IMAGE_INFO_DELET
     const id = req.params.id;
     _.remove(metaImagesDatabase, {"id": id});
     res.send({id})
+});
+
+app.put<{}, TAuthorUpdateEndpointResponse, TAuthorUpdateEndpointRequest>(IMAGE_INFO_PUT_ENDPOINT_PATH, (req, res) => {
+    const id = req.body.id;
+    const author = req.body.author;
+
+    const dataToChange = _.find(metaImagesDatabase, {"id": id});
+    if (dataToChange) {
+        dataToChange.user.name = author;
+    }
+
+    res.send({id, author})
 });
 
 app.listen(PORT);

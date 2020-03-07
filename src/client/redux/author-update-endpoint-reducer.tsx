@@ -5,40 +5,40 @@ import {TSearchEndpoint} from "../../common/search-endpoint"
 import {EEndpointStatus} from "../../common/endpoints"
 import {fetchImageMetaAsyncAction, deleteImageAsyncAction, authorUpdateAsyncAction} from "../view/app-actions";
 import _ from 'lodash'
+import {TAuthorUpdateEndpoint} from "../../common/update-endpoint";
 
 
-export const initialState: TSearchEndpoint = {
+export const initialState: TAuthorUpdateEndpoint = {
     status: EEndpointStatus.INIT,
     request: {
-        search: ""
+        id: "",
+        author: ""
     },
-    response: []
+    response: {
+        id: "",
+        author: ""
+    }
 };
 
-export const searchEndpointReducer = createReducer<TSearchEndpoint, TRootAction>(
+export const authorUpdateEndpointReducer = createReducer<TAuthorUpdateEndpoint, TRootAction>(
     initialState
 )
-    .handleAction(fetchImageMetaAsyncAction.request, (state, action) =>
+    .handleAction(authorUpdateAsyncAction.request, (state, action) =>
         produce(state, draftState => {
             draftState.status = EEndpointStatus.PENDING;
             draftState.request = action.payload
         })
     )
-    .handleAction(fetchImageMetaAsyncAction.success, (state, action) =>
+    .handleAction(authorUpdateAsyncAction.success, (state, action) =>
         produce(state, draftState => {
             draftState.status = EEndpointStatus.SUCCESS;
             draftState.response = action.payload
         })
-    ).handleAction(deleteImageAsyncAction.success, (state, action) =>
+    )
+    .handleAction(authorUpdateAsyncAction.failure, (state, action) =>
         produce(state, draftState => {
-            _.remove(draftState.response, {"id": action.payload.id});
-        })
-    ).handleAction(authorUpdateAsyncAction.success, (state, action) =>
-        produce(state, draftState => {
-            const dataToChange = _.find(draftState.response, {"id": action.payload.id});
-            if (dataToChange) {
-                dataToChange.author = action.payload.author;
-            }
+            draftState.status = EEndpointStatus.ERROR;
+            draftState.response = initialState.response
         })
     );
 

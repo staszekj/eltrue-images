@@ -1,10 +1,10 @@
 import {ActionType} from "typesafe-actions";
 import {call, put, select, delay} from 'redux-saga/effects'
 import {
-    fetchImageMeta,
+    fetchImageMetaAsyncAction,
     appInitAction,
     tileImageComponentDeleteAction,
-    deleteImage
+    deleteImageAsyncAction
 } from "../view/app-actions";
 import {TSearchEndpointRequest, TSearchEndpointResponse} from "../../common/search-endpoint";
 import {getSearchComponentInputString} from "../view/app-selectors";
@@ -31,14 +31,14 @@ export function* appInitSaga(
             search: ''
         };
         yield put(
-            fetchImageMeta.request(request)
+            fetchImageMetaAsyncAction.request(request)
         );
         const data = yield call(httpFetchImageInfo, request);
         yield put(
-            fetchImageMeta.success(data)
+            fetchImageMetaAsyncAction.success(data)
         );
     } catch (error) {
-        yield put(fetchImageMeta.failure({}));
+        yield put(fetchImageMetaAsyncAction.failure({}));
     }
 }
 
@@ -50,14 +50,14 @@ export function* searchComponentTypingSaga() {
         };
         yield delay(500);
         yield put(
-            fetchImageMeta.request(request)
+            fetchImageMetaAsyncAction.request(request)
         );
         const data = yield call(httpFetchImageInfo, request);
         yield put(
-            fetchImageMeta.success(data)
+            fetchImageMetaAsyncAction.success(data)
         );
     } catch (error) {
-        yield put(fetchImageMeta.failure({}));
+        yield put(fetchImageMetaAsyncAction.failure({}));
     }
 }
 
@@ -69,13 +69,13 @@ export function* tileImageDeleteSaga(
             id: action.payload.id
         };
         yield put(
-            deleteImage.request(request)
+            deleteImageAsyncAction.request(request)
         );
         const response = yield call(httpDeleteImageInfo, request);
         yield put(
-            deleteImage.success(response)
+            deleteImageAsyncAction.success(response)
         );
     } catch (error) {
-        yield put(deleteImage.failure({}));
+        yield put(deleteImageAsyncAction.failure({}));
     }
 }

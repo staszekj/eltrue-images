@@ -3,6 +3,7 @@ import {TSearchCompoment} from "../../common/search-component";
 import {TImageMeta, TSearchEndpointRequest, TSearchEndpointResponse} from "../../common/search-endpoint";
 import {TDeleteEndpointRequest, TDeleteEndpointResponse} from "../../common/delete-endpoint";
 import {TOneImageComponentReducer} from "../redux/one-image-component-reducer";
+import {TAuthorUpdateEndpointRequest, TAuthorUpdateEndpointResponse} from "../../common/update-endpoint";
 
 
 export const appInitAction = createStandardAction(
@@ -25,19 +26,26 @@ export const tileImageComponentDeleteAction = createStandardAction(
     "tile-image-component/DELETE"
 )<Pick<TDeleteEndpointRequest, "id">>();
 
-export const fetchImageMeta = createAsyncAction(
+export const fetchImageMetaAsyncAction = createAsyncAction(
     'search-endpoint/REQUEST',
     'search-endpoint/SUCCESS',
     'search-endpoint/FAILURE',
     'search-endpoint/CANCEL'
 )<TSearchEndpointRequest, TSearchEndpointResponse, {}, {}>();
 
-export const deleteImage = createAsyncAction(
+export const deleteImageAsyncAction = createAsyncAction(
     'delete-endpoint/REQUEST',
     'delete-endpoint/SUCCESS',
     'delete-endpoint/FAILURE',
     'delete-endpoint/CANCEL'
 )<TDeleteEndpointRequest, TDeleteEndpointResponse, {}, {}>();
+
+export const authorUpdateAsyncAction = createAsyncAction(
+    'author-update-endpoint/REQUEST',
+    'author-update-endpoint/SUCCESS',
+    'author-update-endpoint/FAILURE',
+    'author-update-endpoint/CANCEL'
+)<TAuthorUpdateEndpointRequest, TAuthorUpdateEndpointResponse, {}, {}>();
 
 export const oneImageComponentCloseClickAction = createStandardAction(
     "one-image-component/CLOSE_CLICK"
