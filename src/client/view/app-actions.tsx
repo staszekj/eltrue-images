@@ -16,11 +16,11 @@ export const searchComponentTypingAction = createStandardAction(
 
 export const searchComponentSelectOneImageAction = createStandardAction(
     "search-component/SELECT_ONE_IMAGE"
-)<TOneImageComponentReducer>();
+)<Pick<TOneImageComponentReducer, "arrayId">>();
 
 export const searchComponentPictureClickAction = createStandardAction(
     "search-component/PICTURE_CLICK"
-)<TOneImageComponentReducer>();
+)<Pick<TOneImageComponentReducer, "arrayId">>();
 
 export const tileImageComponentDeleteAction = createStandardAction(
     "tile-image-component/DELETE"
@@ -53,11 +53,11 @@ export const oneImageComponentCloseClickAction = createStandardAction(
 
 export const oneImageComponentForwardClickAction = createStandardAction(
     "one-image-component/FORWARD_CLICK"
-)<TOneImageComponentReducer>();
+)<Pick<TOneImageComponentReducer, "arrayId">>();
 
 export const oneImageComponentBackwardClickAction = createStandardAction(
     "one-image-component/BACKWARD_CLICK"
-)<TOneImageComponentReducer>();
+)<Pick<TOneImageComponentReducer, "arrayId">>();
 
 export const oneImageComponentEnterTitleAction = createStandardAction(
     "one-image-component/ENTER_TITLE"

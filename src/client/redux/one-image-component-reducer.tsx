@@ -8,26 +8,29 @@ import {
 } from '../view/app-actions'
 
 export interface TOneImageComponentReducer {
-    arrayId: number | null;
+    arrayId: number;
+    show: boolean
 }
 
 export const initialState: TOneImageComponentReducer = {
-    arrayId: null
+    arrayId: 0,
+    show: false
 };
 
 export const oneImageComponentReducer = createReducer<TOneImageComponentReducer, TRootAction>(
     initialState
 ).handleAction([
-    searchComponentSelectOneImageAction,
-    searchComponentPictureClickAction,
-    oneImageComponentForwardClickAction,
-    oneImageComponentBackwardClickAction],
+        searchComponentSelectOneImageAction,
+        searchComponentPictureClickAction,
+        oneImageComponentForwardClickAction,
+        oneImageComponentBackwardClickAction],
     (state, action) =>
-    produce(state, draftState => {
-        draftState.arrayId = action.payload.arrayId
-    })
+        produce(state, draftState => {
+            draftState.arrayId = action.payload.arrayId;
+            draftState.show = true;
+        })
 ).handleAction(oneImageComponentCloseClickAction, (state, action) =>
     produce(state, draftState => {
-        draftState.arrayId = null
+        draftState.show = false
     })
 );

@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {appInitAction} from "./app-actions";
 import {OneImageComponent} from "./one-image-component";
-import {getOneImage} from "./app-selectors";
+import {getOneImage, isOneImageShow} from "./app-selectors";
 
 import './app.scss'
 
@@ -14,13 +14,14 @@ const App: FunctionComponent<{}> = () => {
 
     const dispatch = useDispatch();
     const oneImage = useSelector(getOneImage);
+    const showOneImage = useSelector(isOneImageShow);
 
     useEffect(() => {
         dispatch(appInitAction());
     }, []);
 
 
-    if (oneImage) {
+    if (oneImage && showOneImage) {
         return (
             <OneImageComponent image={oneImage}/>
         )

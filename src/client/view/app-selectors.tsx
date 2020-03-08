@@ -7,12 +7,12 @@ export const getFoundImages = (state: TRootState) => state.searchEndpoint.respon
 export const getFoundImagesLenght = (state: TRootState) => state.searchEndpoint.response.length;
 
 
-export const getOneImage = (state: TRootState) => !_.isNil(state.oneImageComponent.arrayId) && getFoundImagesLenght(state) > 0 ?
-    getFoundImages(state)[state.oneImageComponent.arrayId % getFoundImagesLenght(state)] : null;
+export const isOneImageShow = (state: TRootState) => state.oneImageComponent.show;
+export const getOneImage = (state: TRootState) => getFoundImagesLenght(state) > 0 ?
+    getFoundImages(state)[state.oneImageComponent.arrayId % getFoundImagesLenght(state)]
+    : null;
 
-export const getPrevArrayId = (state: TRootState) => !_.isNil(state.oneImageComponent.arrayId) && getFoundImagesLenght(state) > 0 ?
-    (state.oneImageComponent.arrayId - 1) % getFoundImagesLenght(state) : null;
-export const getNextArrayId = (state: TRootState) => !_.isNil(state.oneImageComponent.arrayId) && getFoundImagesLenght(state) > 0 ?
-    (state.oneImageComponent.arrayId + 1) % getFoundImagesLenght(state) : null;
+export const getPrevArrayId = (state: TRootState) => (state.oneImageComponent.arrayId - 1) % getFoundImagesLenght(state);
+export const getNextArrayId = (state: TRootState) => (state.oneImageComponent.arrayId + 1) % getFoundImagesLenght(state);
 
 export const isAuthorUpdateRequestPending = (state: TRootState) => state.authorUpdateEndpoint.status === EEndpointStatus.PENDING;
