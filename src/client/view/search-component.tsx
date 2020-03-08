@@ -17,7 +17,7 @@ export const SearchCompoment: FunctionComponent<{}> = () => {
 
     return (
             <Navbar sticky="top" bg={"primary"} variant={"dark"} className={classNames("search-component, justify-content-around")}>
-                <Navbar.Brand>My Gallery</Navbar.Brand>
+                <Navbar.Brand>Eltrue Images</Navbar.Brand>
                 <Form inline>
                     <FormControl type="text" placeholder="Search" className=" mr-sm-2" value={value}
                                  onChange={onChangeHandler}/>
