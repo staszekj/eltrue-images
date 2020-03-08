@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "main": "client/index.tsx",
-  "description": "Boilerplate of master-detail image viewer",
   "dependencies": {
     "@types/classnames": "^2.2.9",
     "@types/cors": "^2.8.6",
