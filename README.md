@@ -25,6 +25,7 @@ Go to: http://images.eltrue.com
 
 ### What was implemented ?
 * 600 image links are fetched from https://unsplash.com/ (with query: 'dog')
+* application is implemented with strict type checking in TypeScript (client and server)
 * simple nodejs app with search/delete/update endpoints
 * example of unit test file `one-image-component.test.jsx`
 
