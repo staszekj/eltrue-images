@@ -1,5 +1,5 @@
-### Application Goal
-Point of this appication is to provide boilerplate of master-detail image viewer.
+### Goal
+Goal of this appication is to provide boilerplate of master-detail image viewer.
 
 ### How to run application ?
 Go to: http://images.eltrue.com
@@ -47,7 +47,7 @@ Go to: http://images.eltrue.com
 * use infinite scroll in master view
 * virtual scrolling (restrict amount of dom elements for huge search result)
 
-### Improve code quality
+#### Improve code quality
 * introduce ESLint/Prettier rules
 * more unit tests
 * end-2-end tests with Cypress or similar tool
