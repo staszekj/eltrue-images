@@ -1,17 +1,24 @@
 import React, {FunctionComponent, useEffect, useRef, useState} from 'react'
 import classnames from 'classnames';
-import {MdArrowBack, MdArrowForward, MdClose, MdEdit} from 'react-icons/md';
+import {MdArrowBack, MdArrowForward, MdClose, MdEdit, MdDelete} from 'react-icons/md';
 import {useDispatch, useSelector} from 'react-redux';
 
 import "./one-image-component.scss"
 import {TImageMeta} from "../../common/search-endpoint";
 import {
+    deleteImageAsyncAction,
     oneImageComponentBackwardClickAction,
     oneImageComponentCloseClickAction,
     oneImageComponentEnterTitleAction,
     oneImageComponentForwardClickAction
 } from "./app-actions";
-import {getNextArrayId, getPrevArrayId, isAuthorUpdateRequestPending} from "./app-selectors";
+import {
+    getNextArrayId,
+    getNextArrayIdAfterDelete,
+    getPrevArrayId,
+    isAuthorUpdateRequestPending,
+    isShowAfterDelete
+} from "./app-selectors";
 import {EditableText} from "./widgets/editable-text-widget";
 
 export interface TOneImageComponentProp {
@@ -28,10 +35,13 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
     const [currentId, setCurrentId] = useState<string>(image.id);
     const prevArrayId = useSelector(getPrevArrayId);
     const nextArrayId = useSelector(getNextArrayId);
+    const arrayIdAfterDelete = useSelector(getNextArrayIdAfterDelete);
+    const showAfterDelete = useSelector(isShowAfterDelete);
     const isRequestPending = useSelector(isAuthorUpdateRequestPending);
 
     const dispatch = useDispatch();
     const onCloseBtnClick = () => dispatch(oneImageComponentCloseClickAction());
+    const onDeleteBtnClickHandler = () => dispatch(deleteImageAsyncAction.request({id: image.id, arrayId: arrayIdAfterDelete, show: showAfterDelete}));
     const onForwardBtnClick = () => dispatch(oneImageComponentForwardClickAction({arrayId: nextArrayId}));
     const onPrevBtnClick = () => dispatch(oneImageComponentBackwardClickAction({arrayId: prevArrayId}));
 
@@ -82,6 +92,7 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
                 <div className={classnames("toolbar")}>
                     <div className={classnames("close-icon")} onClick={() => onCloseBtnClick()}><MdClose/></div>
                     <div className={classnames("edit-icon")} onClick={() => swapEditMode()}><MdEdit/></div>
+                    <div className={classnames("delete-icon")} onClick={() => onDeleteBtnClickHandler()}><MdDelete/></div>
                     {spinnerEl}
                 </div>
                 <img ref={imgRef} src={image.imageV300Url} alt={image.author}/>

@@ -23,6 +23,12 @@ exports[`<OneImageComponent/> should be rendered 1`] = `
         <MdEdit />
       </div>
       <div
+        className="delete-icon"
+        onClick={[Function]}
+      >
+        <MdDelete />
+      </div>
+      <div
         className="spinner-icon"
       >
         <div

@@ -3,15 +3,16 @@ import classnames from 'classnames';
 import {MdDelete, MdZoomOutMap} from 'react-icons/md';
 
 import {useRef} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import "./tile-image-component.scss"
 import {
+    deleteImageAsyncAction,
     searchComponentPictureClickAction,
-    searchComponentSelectOneImageAction,
-    tileImageComponentDeleteAction
+    searchComponentSelectOneImageAction
 } from "./app-actions";
 import VisibilitySensor from 'react-visibility-sensor';
+import {getArrayId, isOneImageShow} from "./app-selectors";
 
 export type TTileImageComponentProps = {
     id: string,
@@ -25,11 +26,17 @@ export type TTileImageComponentProps = {
 
 export const TileImageComponent: FunctionComponent<TTileImageComponentProps> = (props) => {
 
-    const dispatch = useDispatch();
+    const {downloadUrl, width, height, title, info, id, arrayId} = props;
     const [isVisible, setVisible] = useState(false);
     const imgRef = useRef<HTMLImageElement>(null);
-    const {downloadUrl, width, height, title, info, id, arrayId} = props;
-    const onDeleteBtnClick = () => dispatch(tileImageComponentDeleteAction({id}));
+    const oneImageShow = useSelector(isOneImageShow);
+    const oneImageArrayId = useSelector(getArrayId);
+    const dispatch = useDispatch();
+    const onDeleteBtnClick = () => dispatch(deleteImageAsyncAction.request({
+        id: id,
+        arrayId: oneImageArrayId,
+        show: oneImageShow
+    }));
     const onZoomOutBtnClick = () => dispatch(searchComponentSelectOneImageAction({arrayId}));
     const onPictureClick = () => dispatch(searchComponentPictureClickAction({arrayId}));
 
@@ -59,7 +66,8 @@ export const TileImageComponent: FunctionComponent<TTileImageComponentProps> = (
                 <span className={classnames("details-content", "info")}>{info}</span>
             </div>
             <div className={"toolbar"}>
-                <div className={classnames("toolbar-content", "icon-1")} onClick={onZoomOutBtnClick}><MdZoomOutMap/></div>
+                <div className={classnames("toolbar-content", "icon-1")} onClick={onZoomOutBtnClick}><MdZoomOutMap/>
+                </div>
                 <div className={classnames("toolbar-content", "icon-2")} onClick={onDeleteBtnClick}><MdDelete/></div>
             </div>
         </div>

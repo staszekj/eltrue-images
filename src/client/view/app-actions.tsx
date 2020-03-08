@@ -22,10 +22,6 @@ export const searchComponentPictureClickAction = createStandardAction(
     "search-component/PICTURE_CLICK"
 )<Pick<TOneImageComponentReducer, "arrayId">>();
 
-export const tileImageComponentDeleteAction = createStandardAction(
-    "tile-image-component/DELETE"
-)<Pick<TDeleteEndpointRequest, "id">>();
-
 export const fetchImageMetaAsyncAction = createAsyncAction(
     'search-endpoint/REQUEST',
     'search-endpoint/SUCCESS',
@@ -38,7 +34,9 @@ export const deleteImageAsyncAction = createAsyncAction(
     'delete-endpoint/SUCCESS',
     'delete-endpoint/FAILURE',
     'delete-endpoint/CANCEL'
-)<TDeleteEndpointRequest, TDeleteEndpointResponse, {}, {}>();
+)<Pick<TDeleteEndpointRequest, "id"> & Pick<TOneImageComponentReducer, "arrayId" | "show">,
+    Pick<TDeleteEndpointResponse, "id"> & Pick<TOneImageComponentReducer, "arrayId" | "show">,
+    {}, {}>();
 
 export const authorUpdateAsyncAction = createAsyncAction(
     'author-update-endpoint/REQUEST',

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {shallow} from 'enzyme'
 import {useDispatch, useSelector} from 'react-redux';
-import {getNextArrayId, getPrevArrayId, isAuthorUpdateRequestPending} from "../app-selectors";
+import {getNextArrayId, getPrevArrayId, isAuthorUpdateRequestPending, getNextArrayIdAfterDelete, isShowAfterDelete} from "../app-selectors";
 import {OneImageComponent} from "../one-image-component";
 
 jest.mock('react-redux', () => {
@@ -22,7 +22,9 @@ describe('<OneImageComponent/>', () => {
     const useSelectorMap = {
         [getNextArrayId]: 1,
         [getPrevArrayId]: 2,
-        [isAuthorUpdateRequestPending]: false
+        [isAuthorUpdateRequestPending]: false,
+        [getNextArrayIdAfterDelete]: 0,
+        [isShowAfterDelete]: false
     };
 
     const useRefSpy = jest.spyOn(React, "useRef");

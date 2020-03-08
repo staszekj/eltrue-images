@@ -2,6 +2,7 @@ import {produce} from "immer";
 import {createReducer} from "typesafe-actions";
 import {TRootAction} from "./root-action";
 import {
+    deleteImageAsyncAction,
     oneImageComponentBackwardClickAction,
     oneImageComponentCloseClickAction, oneImageComponentForwardClickAction, searchComponentPictureClickAction,
     searchComponentSelectOneImageAction,
@@ -33,4 +34,8 @@ export const oneImageComponentReducer = createReducer<TOneImageComponentReducer,
     produce(state, draftState => {
         draftState.show = false
     })
-);
+).handleAction(deleteImageAsyncAction.success, (state, action) =>
+    produce(state, draftState => {
+        draftState.arrayId = action.payload.arrayId;
+        draftState.show = action.payload.show;
+    }));

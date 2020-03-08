@@ -3,7 +3,6 @@ import {call, put, select, delay} from 'redux-saga/effects'
 import {
     fetchImageMetaAsyncAction,
     appInitAction,
-    tileImageComponentDeleteAction,
     deleteImageAsyncAction
 } from "../view/app-actions";
 import {TSearchEndpointRequest, TSearchEndpointResponse} from "../../common/search-endpoint";
@@ -62,18 +61,12 @@ export function* searchComponentTypingSaga() {
 }
 
 export function* tileImageDeleteSaga(
-    action: ActionType<typeof tileImageComponentDeleteAction>
+    action: ActionType<typeof deleteImageAsyncAction.request>
 ) {
     try {
-        const request: TDeleteEndpointRequest = {
-            id: action.payload.id
-        };
+        const response: TDeleteEndpointResponse = yield call(httpDeleteImageInfo, action.payload);
         yield put(
-            deleteImageAsyncAction.request(request)
-        );
-        const response = yield call(httpDeleteImageInfo, request);
-        yield put(
-            deleteImageAsyncAction.success(response)
+            deleteImageAsyncAction.success({...action.payload, ...response})
         );
     } catch (error) {
         yield put(deleteImageAsyncAction.failure({}));
