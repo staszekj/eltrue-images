@@ -37,7 +37,7 @@ Go to: http://images.eltrue.com
 
 #### detailed view
 * progressive loading of full image
-* cancel loading of full images (while user fast clicking)
+* cancel loading of full images (while user fast clicking forward/backward buttons)
 * picture details editing (client and server side)
 
 ### What was NOT implemented but IMHO is worth to implement
@@ -45,7 +45,7 @@ Go to: http://images.eltrue.com
 * scroll to element after switching from detail view to master view
 * use http2 for downloading images (request multiplexing over a single TCP connection)
 * use infinite scroll in master view
-* virtual scrolling (restrict amount of dom elements for huge amount of search result)
+* virtual scrolling (restrict amount of dom elements for huge search result)
 
 ### Improve code quality
 * introduce ESLint/Prettier rules
