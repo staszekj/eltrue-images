@@ -6,10 +6,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import "./one-image-component.scss"
 import {TImageMeta} from "../../common/search-endpoint";
 import {
+    authorUpdateAsyncAction,
     deleteImageAsyncAction,
     oneImageComponentBackwardClickAction,
     oneImageComponentCloseClickAction,
-    oneImageComponentEnterTitleAction,
     oneImageComponentForwardClickAction
 } from "./app-actions";
 import {
@@ -51,7 +51,7 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
     };
     const onEnterTitle = () => {
         setAuthorEditMode(false);
-        dispatch(oneImageComponentEnterTitleAction({id: image.id, author: currentAuthor}));
+        dispatch(authorUpdateAsyncAction.request({id: image.id, author: currentAuthor}));
     };
 
     const EditableTextString = isAuthorEditMode || isRequestPending ? currentAuthor : image.author;

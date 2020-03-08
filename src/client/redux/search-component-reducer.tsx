@@ -1,14 +1,17 @@
 import {produce} from "immer";
 import {createReducer} from "typesafe-actions";
 import {TRootAction} from "./root-action";
-import {TSearchCompoment} from '../../common/search-component'
 import {searchComponentTypingAction} from '../view/app-actions'
 
-export const initialState: TSearchCompoment = {
+export interface TSearchCompomentReducer {
+    inputString: string
+}
+
+export const initialState: TSearchCompomentReducer = {
     inputString: ""
 };
 
-export const searchComponentReducer = createReducer<TSearchCompoment, TRootAction>(
+export const searchComponentReducer = createReducer<TSearchCompomentReducer, TRootAction>(
     initialState
 ).handleAction(searchComponentTypingAction, (state, action) =>
     produce(state, draftState => {

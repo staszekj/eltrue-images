@@ -1,12 +1,11 @@
 import {ActionType} from "typesafe-actions";
-import {call, put, select, delay} from 'redux-saga/effects'
-import {oneImageComponentEnterTitleAction, authorUpdateAsyncAction
-} from "../view/app-actions";
+import {call, put} from 'redux-saga/effects'
 import {
     IMAGE_INFO_PUT_ENDPOINT_PATH,
 } from '../../common/endpoints'
 import axios from 'axios';
 import {TAuthorUpdateEndpointRequest, TAuthorUpdateEndpointResponse} from "../../common/update-endpoint";
+import {authorUpdateAsyncAction} from "../view/app-actions";
 
 export const httpPutAuthorUpdate = async (request: TAuthorUpdateEndpointRequest) => {
     const serverResponse = await axios.put<TAuthorUpdateEndpointResponse>(IMAGE_INFO_PUT_ENDPOINT_PATH, request);
@@ -14,17 +13,10 @@ export const httpPutAuthorUpdate = async (request: TAuthorUpdateEndpointRequest)
 };
 
 export function* oneImageComponentEnterTitleSaga(
-    action: ActionType<typeof oneImageComponentEnterTitleAction>
+    action: ActionType<typeof authorUpdateAsyncAction.request>
 ) {
     try {
-        const request: TAuthorUpdateEndpointRequest = {
-            id: action.payload.id,
-            author: action.payload.author
-        };
-        yield put(
-            authorUpdateAsyncAction.request(request)
-        );
-        const response = yield call(httpPutAuthorUpdate, request);
+        const response: TAuthorUpdateEndpointResponse = yield call(httpPutAuthorUpdate, action.payload);
         yield put(
             authorUpdateAsyncAction.success(response)
         );

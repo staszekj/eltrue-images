@@ -1,11 +1,11 @@
 import React, {ChangeEvent, FunctionComponent} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import {getSearchComponentInputString} from "./app-selectors";
-import {searchComponentTypingAction} from "./app-actions";
 import {Navbar, Form, InputGroup, FormControl, Button} from 'react-bootstrap'
 import classNames from "classnames";
 
 import './search-component.scss'
+import {searchComponentTypingAction} from "./app-actions";
 
 export const SearchCompoment: FunctionComponent<{}> = () => {
     const dispatch = useDispatch();

@@ -1,9 +1,9 @@
 import {createStandardAction, createAsyncAction} from "typesafe-actions";
-import {TSearchCompoment} from "../../common/search-component";
-import {TImageMeta, TSearchEndpointRequest, TSearchEndpointResponse} from "../../common/search-endpoint";
+import {TSearchEndpointRequest, TSearchEndpointResponse} from "../../common/search-endpoint";
 import {TDeleteEndpointRequest, TDeleteEndpointResponse} from "../../common/delete-endpoint";
 import {TOneImageComponentReducer} from "../redux/one-image-component-reducer";
 import {TAuthorUpdateEndpointRequest, TAuthorUpdateEndpointResponse} from "../../common/update-endpoint";
+import {TSearchCompomentReducer} from "../redux/search-component-reducer";
 
 
 export const appInitAction = createStandardAction(
@@ -12,7 +12,7 @@ export const appInitAction = createStandardAction(
 
 export const searchComponentTypingAction = createStandardAction(
     "search-component/TYPING"
-)<Pick<TSearchCompoment, "inputString">>();
+)<Pick<TSearchCompomentReducer, "inputString">>();
 
 export const searchComponentSelectOneImageAction = createStandardAction(
     "search-component/SELECT_ONE_IMAGE"
@@ -27,7 +27,7 @@ export const fetchImageMetaAsyncAction = createAsyncAction(
     'search-endpoint/SUCCESS',
     'search-endpoint/FAILURE',
     'search-endpoint/CANCEL'
-)<TSearchEndpointRequest, TSearchEndpointResponse, {}, {}>();
+)<Pick<TSearchEndpointRequest, "search">, TSearchEndpointResponse, {}, {}>();
 
 export const deleteImageAsyncAction = createAsyncAction(
     'delete-endpoint/REQUEST',
@@ -56,7 +56,3 @@ export const oneImageComponentForwardClickAction = createStandardAction(
 export const oneImageComponentBackwardClickAction = createStandardAction(
     "one-image-component/BACKWARD_CLICK"
 )<Pick<TOneImageComponentReducer, "arrayId">>();
-
-export const oneImageComponentEnterTitleAction = createStandardAction(
-    "one-image-component/ENTER_TITLE"
-)<Pick<TImageMeta, "id" | "author">>();

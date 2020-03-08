@@ -2,7 +2,7 @@ import { takeLeading, takeLatest } from "redux-saga/effects";
 import {
     searchComponentTypingAction,
     appInitAction,
-    oneImageComponentEnterTitleAction, deleteImageAsyncAction
+    deleteImageAsyncAction, authorUpdateAsyncAction, fetchImageMetaAsyncAction
 } from "../view/app-actions";
 import {
     appInitSaga,
@@ -14,7 +14,7 @@ export function* rootSaga() {
     yield takeLeading(appInitAction, appInitSaga);
     yield takeLatest(searchComponentTypingAction, searchComponentTypingSaga);
     yield takeLatest(deleteImageAsyncAction.request, tileImageDeleteSaga);
-    yield takeLatest(oneImageComponentEnterTitleAction, oneImageComponentEnterTitleSaga);
+    yield takeLatest(authorUpdateAsyncAction.request, oneImageComponentEnterTitleSaga);
 }
 
 
