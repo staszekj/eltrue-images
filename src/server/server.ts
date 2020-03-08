@@ -52,10 +52,9 @@ if (fs.existsSync(unsplashJsonPath)) {
 //
 // Images Preprocessing
 //
-// I commented it out because https://images.unsplash.com/ already provides preprocessed images
+// Image processing is not needed because https://images.unsplash.com/ already provides preprocessed images
 // if you add '&h=300&fit=max' to image url
 //
-//preProcessImages();
 
 app.use(cors());
 app.use(bodyParser.json());
