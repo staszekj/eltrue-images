@@ -9,6 +9,6 @@ jest.mock('../server', () => {
 
 describe("Test", () => {
     it('should be', () => {
-        expect(PORT).toBe(3000)
+        expect(PORT).toBe(2000)
     });
 });

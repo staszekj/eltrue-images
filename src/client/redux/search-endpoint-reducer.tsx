@@ -1,11 +1,16 @@
 import {produce} from "immer";
 import {createReducer} from "typesafe-actions";
 import {TRootAction} from "./root-action";
-import {TSearchEndpoint} from "../../common/search-endpoint"
+import {TSearchEndpointRequest, TSearchEndpointResponse} from "../../common/search-endpoint"
 import {EEndpointStatus} from "../../common/endpoints"
 import {fetchImageMetaAsyncAction, deleteImageAsyncAction, authorUpdateAsyncAction} from "../view/app-actions";
 import _ from 'lodash'
 
+export interface TSearchEndpoint {
+    status: EEndpointStatus,
+    request: TSearchEndpointRequest,
+    response: TSearchEndpointResponse
+}
 
 export const initialState: TSearchEndpoint = {
     status: EEndpointStatus.INIT,

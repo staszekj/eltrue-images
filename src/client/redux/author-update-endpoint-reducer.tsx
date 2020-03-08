@@ -1,12 +1,18 @@
 import {produce} from "immer";
 import {createReducer} from "typesafe-actions";
 import {TRootAction} from "./root-action";
-import {TSearchEndpoint} from "../../common/search-endpoint"
 import {EEndpointStatus} from "../../common/endpoints"
-import {fetchImageMetaAsyncAction, deleteImageAsyncAction, authorUpdateAsyncAction} from "../view/app-actions";
-import _ from 'lodash'
-import {TAuthorUpdateEndpoint} from "../../common/update-endpoint";
+import {authorUpdateAsyncAction} from "../view/app-actions";
+import {
+    TAuthorUpdateEndpointRequest,
+    TAuthorUpdateEndpointResponse
+} from "../../common/update-endpoint";
 
+export interface TAuthorUpdateEndpoint {
+    status: EEndpointStatus,
+    request: TAuthorUpdateEndpointRequest,
+    response: TAuthorUpdateEndpointResponse
+}
 
 export const initialState: TAuthorUpdateEndpoint = {
     status: EEndpointStatus.INIT,

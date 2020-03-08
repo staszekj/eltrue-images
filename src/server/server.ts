@@ -44,7 +44,8 @@ if (fs.existsSync(unsplashJsonPath)) {
     });
     Promise.all(promises)
         .then(() => {
-            fs.writeFileSync(unsplashJsonPath, JSON.stringify(metaImagesDatabase))
+            fs.writeFileSync(unsplashJsonPath, JSON.stringify(metaImagesDatabase));
+            console.log('--> ' + metaImagesDatabase.length + " elements have been saved to: " + unsplashJsonPath);
         });
 }
 
