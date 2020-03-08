@@ -14,7 +14,8 @@ export const getOneImage = (state: TRootState) => getFoundImagesLenght(state) > 
 export const getArrayId = (state: TRootState) => state.oneImageComponent.arrayId;
 export const getPrevArrayId = (state: TRootState) => (state.oneImageComponent.arrayId - 1) % getFoundImagesLenght(state);
 export const getNextArrayId = (state: TRootState) => (state.oneImageComponent.arrayId + 1) % getFoundImagesLenght(state);
-export const getNextArrayIdAfterDelete = (state: TRootState) => getFoundImagesLenght(state) > 1 ? getNextArrayId(state) : 0;
+export const getNextArrayIdAfterDelete = (state: TRootState) => getFoundImagesLenght(state) > 1 && getFoundImagesLenght(state) - 1 > getArrayId(state) ?
+    getArrayId(state) : 0;
 export const isShowAfterDelete = (state: TRootState) => getFoundImagesLenght(state) > 1 ? isOneImageShow(state) : false;
 
 export const isAuthorUpdateRequestPending = (state: TRootState) => state.authorUpdateEndpoint.status === EEndpointStatus.PENDING;
