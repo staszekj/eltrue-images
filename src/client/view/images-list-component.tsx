@@ -1,5 +1,5 @@
 import React, {FunctionComponent} from 'react'
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector} from 'react-redux'
 import {getFoundImages} from './app-selectors'
 import _ from 'lodash';
 import {TileImageComponent} from "./tile-image-component";

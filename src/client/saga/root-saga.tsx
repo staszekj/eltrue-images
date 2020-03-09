@@ -2,7 +2,7 @@ import { takeLeading, takeLatest } from "redux-saga/effects";
 import {
     searchComponentTypingAction,
     appInitAction,
-    deleteImageAsyncAction, authorUpdateAsyncAction, fetchImageMetaAsyncAction
+    deleteImageAsyncAction, authorUpdateAsyncAction
 } from "../view/app-actions";
 import {
     appInitSaga,

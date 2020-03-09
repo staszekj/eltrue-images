@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useEffect, useState} from 'react';
+import React, {FunctionComponent, useEffect} from 'react';
 import {SearchCompoment} from './search-component'
 import {ImagesListComponent} from './images-list-component'
 import {useDispatch, useSelector} from "react-redux";
@@ -18,7 +18,7 @@ const App: FunctionComponent<{}> = () => {
 
     useEffect(() => {
         dispatch(appInitAction());
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 
     if (oneImage && showOneImage) {

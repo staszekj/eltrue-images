@@ -87,7 +87,7 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
             }, 500);
             setCurrentTimeout(delayedFullImageLoading)
         }
-    }, [image.id]);
+    }, [image.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className={"one-image-component"}>
