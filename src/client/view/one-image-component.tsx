@@ -28,11 +28,13 @@ export interface TOneImageComponentProp {
 export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({image}) => {
 
     const imgRef = useRef<HTMLImageElement>(null);
+
     const [isAuthorEditMode, setAuthorEditMode] = useState<boolean>(false);
     const [isImageFullyLoaded, setImageFullyLoaded] = useState<boolean>(false);
     const [currentAuthor, setCurrentAuthor] = useState<string>(image.author);
     const [currentTimeout, setCurrentTimeout] = useState<ReturnType<typeof setTimeout>|null>(null);
     const [currentId, setCurrentId] = useState<string>(image.id);
+
     const prevArrayId = useSelector(getPrevArrayId);
     const nextArrayId = useSelector(getNextArrayId);
     const arrayIdAfterDelete = useSelector(getNextArrayIdAfterDelete);
@@ -40,6 +42,7 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
     const isRequestPending = useSelector(isAuthorUpdateRequestPending);
 
     const dispatch = useDispatch();
+
     const onCloseBtnClick = () => dispatch(oneImageComponentCloseClickAction());
     const onDeleteBtnClickHandler = () => dispatch(deleteImageAsyncAction.request({id: image.id, arrayId: arrayIdAfterDelete, show: showAfterDelete}));
     const onForwardBtnClick = () => dispatch(oneImageComponentForwardClickAction({arrayId: nextArrayId}));

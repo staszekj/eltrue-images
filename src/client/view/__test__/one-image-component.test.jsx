@@ -13,11 +13,12 @@ jest.mock('react-redux', () => {
 
 describe('<OneImageComponent/>', () => {
 
-    const setAuthorEditModeSpy = jest.fn();
-    const setImageFullyLoadedSpy = jest.fn();
-    const setCurrentAuthorSpy = jest.fn();
-    const setCurrentTimeoutSpy = jest.fn();
-    const setCurrentIdSpy = jest.fn();
+    const useRefSpy = jest.spyOn(React, "useRef");
+    const useStateSpy = jest.spyOn(React, "useState");
+    const useEffectSpy = jest.spyOn(React, "useEffect");
+
+    const setStateSpy = jest.fn();
+    const dispatchSpy = jest.fn();
 
     const useSelectorMap = {
         [getNextArrayId]: 1,
@@ -27,22 +28,11 @@ describe('<OneImageComponent/>', () => {
         [isShowAfterDelete]: false
     };
 
-    const useRefSpy = jest.spyOn(React, "useRef");
-    const useStateSpy = jest.spyOn(React, "useState");
-    const useEffectSpy = jest.spyOn(React, "useEffect");
-    const dispatchSpy = jest.fn();
-
     beforeEach(() => {
         jest.useFakeTimers();
 
-        useStateSpy
-            .mockImplementationOnce(() => [false, setAuthorEditModeSpy])
-            .mockImplementationOnce(() => [false, setImageFullyLoadedSpy])
-            .mockImplementationOnce(() => ["fake author", setCurrentAuthorSpy])
-            .mockImplementationOnce(() => [null, setCurrentTimeoutSpy])
-            .mockImplementationOnce(() => ["fake id", setCurrentIdSpy]);
-
         useRefSpy.mockReturnValue({current: {}} );
+        useStateSpy.mockImplementation((initValue) => [initValue, setStateSpy]);
         useSelector.mockImplementation((selectorfn) => useSelectorMap[selectorfn]);
         useDispatch.mockImplementation(() => dispatchSpy);
 
@@ -68,8 +58,9 @@ describe('<OneImageComponent/>', () => {
 
     it('should handle useEffect', () => {
         //TODO
-        //To mock new Image getNewImage function should be delegated to other module
-        //then such module should be mocked here
+        //To mock "new Image()" we should create "export const getNewImage = () => new Image()"
+        //function in other module
+        //then that module should be mocked here
 
         //given
         shallow(<OneImageComponent {...props}/>);
@@ -81,6 +72,6 @@ describe('<OneImageComponent/>', () => {
         setTimeoutHandler();
 
         //then
-        expect(setCurrentTimeoutSpy).toHaveBeenCalledWith(expect.any(Number));
+        expect(setStateSpy).toHaveBeenCalledWith(expect.any(Number));
     })
 });
