@@ -1,27 +1,32 @@
 ### Goal
 Goal of this appication is to provide boilerplate of master-detail image viewer.
 
-### How to run application ?
-Go to: http://images.eltrue.com
-(eltrue.com is my private domain, application is deplyed on my private RaspberryPi)
+### How to open application ?
+https://images-eltrue-com.herokuapp.com
 
 ### How to run application in dev mode (server and client) ?
-* git clone https://github.com/staszekj/eltrue-images.git
-* npm install
-* npm run start:srv
-* npm run start
+* `git clone https://github.com/staszekj/eltrue-images.git`
+* `npm install`
+* `npm run start:dev` (both: nodejs and react-scripts start)
+
+Optionally:
+* `npm run start:dev:srv` (nodejs in dev mode)
+* `npm run start:dev:web` (react-scripts start)
 
 ### How to run unit tests ?
-* npm run test
+* `npm test`
 
 ### How to build application ?
-* npm install
-* npm run build:srv
-* npm run build
+* `npm install`
+* `npm run build`
 
-### How to run built application ?
-* build application
-* npm run run:srv
+Optionally:
+* `npm run build:web` (react-scripts start)
+* `npm run build:srv` (nodejs in dev mode)
+
+### How to locally run application in production mode?
+* `npm run build`
+* `npm start`
 
 ### What was implemented ?
 * 600 image links are fetched from https://unsplash.com/ (with query: 'dog')
