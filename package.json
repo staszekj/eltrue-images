@@ -2,6 +2,11 @@
   "name": "eltrue-images",
   "version": "0.1.0",
   "private": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/staszekj/eltrue-images.git"
+  },
   "main": "build/common/index.js",
   "dependencies": {
     "@types/classnames": "^2.2.10",
@@ -22,6 +27,7 @@
     "ipp": "^2.0.1",
     "isomorphic-fetch": "^2.2.1",
     "jimp": "^0.9.5",
+    "jquery": "^3.4.1",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
     "react": "^16.13.0",
