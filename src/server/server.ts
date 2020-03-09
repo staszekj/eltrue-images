@@ -10,10 +10,11 @@ import {
     IMAGE_INFO_DELETE_ENDPOINT_PATH, IMAGE_INFO_PUT_ENDPOINT_PATH
 } from "../common/endpoints"
 
-import {TDeleteEndpointRequest, TDeleteEndpointResponse} from "../common/delete-endpoint";
+import {TDeleteEndpointResponse} from "../common/delete-endpoint";
 import Unsplash, {toJson} from 'unsplash-js';
 import "isomorphic-fetch"
 import {TAuthorUpdateEndpointRequest, TAuthorUpdateEndpointResponse} from "../common/update-endpoint";
+import {ParamsDictionary} from "express-serve-static-core";
 
 export const unsplashJsonPath = './data/unsplash.json';
 export const PORT = 8000;
@@ -75,7 +76,7 @@ app.post<{}, TSearchEndpointResponse, TSearchEndpointRequest>(IMAGE_INFO_SEARCH_
     res.send(results)
 });
 
-app.delete<TDeleteEndpointRequest, TDeleteEndpointResponse, {}>(IMAGE_INFO_DELETE_ENDPOINT_PATH + '/:id', (req, res) => {
+app.delete<ParamsDictionary, TDeleteEndpointResponse, {}>(IMAGE_INFO_DELETE_ENDPOINT_PATH + '/:id', (req, res) => {
     const id = req.params.id;
     _.remove(metaImagesDatabase, {"id": id});
     res.send({id})

@@ -1,7 +1,4 @@
-import {EEndpointStatus} from "./endpoints";
-import {ParamsDictionary} from 'express-serve-static-core'
-
-export interface TDeleteEndpointRequest extends ParamsDictionary{
+export interface TDeleteEndpointRequest{
     id: string
 }
 export type TDeleteEndpointResponse = {
