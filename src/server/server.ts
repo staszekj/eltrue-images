@@ -17,7 +17,7 @@ import {TAuthorUpdateEndpointRequest, TAuthorUpdateEndpointResponse} from "../co
 import {ParamsDictionary} from "express-serve-static-core";
 
 export const unsplashJsonPath = './data/unsplash.json';
-export const PORT = 8000;
+export const PORT = process.env.PORT || 3000;
 export const app = express();
 export const v300QueryString = '&h=300&fit=max';
 
@@ -97,9 +97,9 @@ app.put<{}, TAuthorUpdateEndpointResponse, TAuthorUpdateEndpointRequest>(IMAGE_I
     }, 1000);
 });
 
+console.log(`Server is started on port ${PORT}`);
 app.listen(PORT);
 
-console.log(`Server is started on port ${PORT}`);
 
 
 
