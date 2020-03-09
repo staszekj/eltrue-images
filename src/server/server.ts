@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors'
 import bodyParser from 'body-parser';
 import {TSearchEndpointRequest, TSearchEndpointResponse} from "../common/search-endpoint";
 import _ from "lodash";
@@ -56,7 +55,6 @@ if (fs.existsSync(unsplashJsonPath)) {
 // if you add '&h=300&fit=max' to image url
 //
 
-app.use(cors());
 app.use(bodyParser.json());
 app.use(PUBLIC_CTX_PATH, express.static("public"));
 app.use('/', express.static("build"));
