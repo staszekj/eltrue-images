@@ -33,6 +33,7 @@ export const EditableText: FunctionComponent<TEditableTextWidget> = (props) => {
                 <input type="text"
                        readOnly={isReadOnly}
                        value={text}
+                       autoFocus={true}
                        onChange={(e) => onChange && onChange(e.target.value)}
                        onKeyUp={(e) => {
                            if (e.keyCode === 13) {

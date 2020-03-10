@@ -17,7 +17,7 @@ import {TAuthorUpdateEndpointRequest, TAuthorUpdateEndpointResponse} from "../co
 import {ParamsDictionary} from "express-serve-static-core";
 
 export const unsplashJsonPath = './data/unsplash.json';
-export const PORT = process.env.PORT || 3000;
+export const PORT = process.env.PORT || 8000;
 export const app = express();
 export const v300QueryString = '&h=300&fit=max';
 
