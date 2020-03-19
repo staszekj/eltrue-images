@@ -5,11 +5,16 @@ import _ from 'lodash';
 import {TileImageComponent} from "./tile-image-component";
 
 import './images-list-component.scss'
+import styled from "styled-components";
+
+const ImageListStl = styled.div`
+  padding-top: 64px;
+`;
 
 export const ImagesListComponent: FunctionComponent<{}> = () => {
     const founded = useSelector(getFoundImages);
     return (
-        <div className={"images-list-component"}>
+        <ImageListStl className={"images-list-component"}>
             {_.map(founded, (i, arrayId) => {
                 const title = i.author;
                 const info = `${i.width} x ${i.height}`;
@@ -26,6 +31,6 @@ export const ImagesListComponent: FunctionComponent<{}> = () => {
                     />
                 )
             })}
-        </div>
+        </ImageListStl>
     )
 };

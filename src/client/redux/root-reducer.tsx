@@ -5,12 +5,14 @@ import {searchComponentReducer, TSearchCompomentReducer} from "./search-componen
 
 import {oneImageComponentReducer, TOneImageComponentReducer} from "./one-image-component-reducer";
 import {authorUpdateEndpointReducer, TAuthorUpdateEndpoint} from "./author-update-endpoint-reducer";
+import {themeReducer, TThemeReducer} from "./theme-reducer";
 
 export interface TRootState {
     searchEndpoint: TSearchEndpoint,
     authorUpdateEndpoint: TAuthorUpdateEndpoint,
     searchComponent: TSearchCompomentReducer,
-    oneImageComponent: TOneImageComponentReducer
+    oneImageComponent: TOneImageComponentReducer,
+    theme: TThemeReducer
 }
 
 export const rootReducer = combineReducers<TRootState>({
@@ -18,5 +20,6 @@ export const rootReducer = combineReducers<TRootState>({
     authorUpdateEndpoint: authorUpdateEndpointReducer,
     searchComponent: searchComponentReducer,
     oneImageComponent: oneImageComponentReducer,
+    theme: themeReducer
 });
 
