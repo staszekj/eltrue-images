@@ -1,14 +1,16 @@
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 import ReactDOM from 'react-dom';
 import createSagaMiddleware from "redux-saga";
 import * as serviceWorker from './serviceWorker';
+import {MuiThemeProvider, StylesProvider} from "@material-ui/core";
 
 import App from './view/App';
 
 import {rootSaga} from "./saga/root-saga";
 import {rootReducer} from "./redux/root-reducer";
-import {Provider} from "react-redux";
+import {Provider, useSelector} from "react-redux";
 import {createStore, applyMiddleware, compose} from "redux";
+import {getTheme} from "./view/app-selectors";
 
 const composeEnv =
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -19,10 +21,22 @@ const store = createStore(
     composeEnv(applyMiddleware(sagaMiddleware))
 );
 
+const ElTrueMuiProvider: FunctionComponent = ({children}) => {
+    return (
+        <StylesProvider injectFirst>
+            <MuiThemeProvider theme={useSelector(getTheme)}>
+                {children}
+            </MuiThemeProvider>
+        </StylesProvider>
+    )
+};
+
 sagaMiddleware.run(rootSaga);
 ReactDOM.render(
     <Provider store={store}>
-        <App/>
+        <ElTrueMuiProvider>
+            <App/>
+        </ElTrueMuiProvider>
     </Provider>,
     document.getElementById('root'));
 

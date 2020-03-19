@@ -19,3 +19,5 @@ export const getNextArrayIdAfterDelete = (state: TRootState) => getFoundImagesLe
 export const isShowAfterDelete = (state: TRootState) => getFoundImagesLenght(state) > 1 ? isOneImageShow(state) : false;
 
 export const isAuthorUpdateRequestPending = (state: TRootState) => state.authorUpdateEndpoint.status === EEndpointStatus.PENDING;
+
+export const getTheme = (state: TRootState) => state.theme;
