@@ -1,9 +1,8 @@
 import React, {FunctionComponent, useEffect} from 'react';
 import {SearchCompoment} from './search-component'
-import {ImagesListComponent} from './images-list-component'
+import {MainContent} from './main-content'
 import {useDispatch, useSelector} from "react-redux";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {appInitAction} from "./app-actions";
 import {OneImageComponent} from "./one-image-component";
 import {getOneImage, isOneImageShow} from "./app-selectors";
@@ -30,7 +29,7 @@ const App: FunctionComponent<{}> = () => {
     return (
         <div>
             <SearchCompoment/>
-            <ImagesListComponent/>
+            <MainContent/>
         </div>
     )
 };
