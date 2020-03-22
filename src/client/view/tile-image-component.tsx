@@ -68,7 +68,8 @@ export const TileImageComponent: FunctionComponent<TTileImageComponentProps> = (
             <div className={"toolbar"}>
                 <div className={classnames("toolbar-content", "icon-1")} onClick={onZoomOutBtnClick}><MdZoomOutMap/>
                 </div>
-                <div className={classnames("toolbar-content", "icon-2")} onClick={onDeleteBtnClick}><MdDelete/></div>
+                <div className={classnames("toolbar-content", "icon-2")} onClick={onDeleteBtnClick}><MdDelete/>
+                </div>
             </div>
         </div>
     );

@@ -32,7 +32,7 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
     const [isAuthorEditMode, setAuthorEditMode] = useState<boolean>(false);
     const [isImageFullyLoaded, setImageFullyLoaded] = useState<boolean>(false);
     const [currentAuthor, setCurrentAuthor] = useState<string>(image.author);
-    const [currentTimeout, setCurrentTimeout] = useState<ReturnType<typeof setTimeout>|null>(null);
+    const [currentTimeout, setCurrentTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
     const [currentId, setCurrentId] = useState<string>(image.id);
 
     const prevArrayId = useSelector(getPrevArrayId);
@@ -44,7 +44,11 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
     const dispatch = useDispatch();
 
     const onCloseBtnClick = () => dispatch(oneImageComponentCloseClickAction());
-    const onDeleteBtnClickHandler = () => dispatch(deleteImageAsyncAction.request({id: image.id, arrayId: arrayIdAfterDelete, show: showAfterDelete}));
+    const onDeleteBtnClickHandler = () => dispatch(deleteImageAsyncAction.request({
+        id: image.id,
+        arrayId: arrayIdAfterDelete,
+        show: showAfterDelete
+    }));
     const onForwardBtnClick = () => dispatch(oneImageComponentForwardClickAction({arrayId: nextArrayId}));
     const onPrevBtnClick = () => dispatch(oneImageComponentBackwardClickAction({arrayId: prevArrayId}));
 
@@ -70,23 +74,21 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
     }
 
     useEffect(() => {
-        const imageRef = imgRef.current;
-        if (imageRef) {
-            if (currentTimeout) {
-                clearTimeout(currentTimeout)
-            }
-            const delayedFullImageLoading = setTimeout(() => {
-                const imageLoader = new Image();
-                imageLoader.src = image.downloadUrl;
-                imageLoader.onload = () => {
-                    if (imageRef.src === image.imageV300Url) {
-                        imageRef.src = imageLoader.src;
-                        setImageFullyLoaded(true);
-                    }
-                };
-            }, 500);
-            setCurrentTimeout(delayedFullImageLoading)
+        if (currentTimeout) {
+            clearTimeout(currentTimeout)
         }
+        const delayedFullImageLoading = setTimeout(() => {
+            const imageLoader = new Image();
+            imageLoader.src = image.downloadUrl;
+            imageLoader.onload = () => {
+                const imageRef = imgRef.current;
+                if (imageRef && imageRef.src === image.imageV300Url) {
+                    imageRef.src = imageLoader.src;
+                    setImageFullyLoaded(true);
+                }
+            };
+        }, 500);
+        setCurrentTimeout(delayedFullImageLoading)
     }, [image.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
@@ -95,7 +97,8 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
                 <div className={classnames("toolbar")}>
                     <div className={classnames("close-icon")} onClick={() => onCloseBtnClick()}><MdClose/></div>
                     <div className={classnames("edit-icon")} onClick={() => swapEditMode()}><MdEdit/></div>
-                    <div className={classnames("delete-icon")} onClick={() => onDeleteBtnClickHandler()}><MdDelete/></div>
+                    <div className={classnames("delete-icon")} onClick={() => onDeleteBtnClickHandler()}><MdDelete/>
+                    </div>
                     {spinnerEl}
                 </div>
                 <img ref={imgRef} src={image.imageV300Url} alt={image.author}/>
