@@ -53,60 +53,59 @@ const useStyles = makeStyles(theme => ({
 }));
 
 type TImageResolutionsData = {
-  text: string,
-  level: number,
-  hash: string
-  children: TImageResolutionsData[]
+    text: string,
+    hash: string
+    active: boolean,
+    children: TImageResolutionsData[]
 }
 
 export const ImageResolutions: FunctionComponent = () => {
     const classes = useStyles();
-    const itemsServer: TImageResolutionsData[] = [
+    const tocItems: TImageResolutionsData[] = [
         {
             text: '1920 x 1280',
-            level: 2,
             hash: "test1",
+            active: false,
             children: [
                 {
                     text: 'Stan Jagiella',
-                    level: 2,
                     hash: "test11",
+                    active: false,
                     children: []
                 },
                 {
                     text: 'Mike Jagiella',
-                    level: 2,
                     hash: "test12",
+                    active: true,
                     children: []
                 }
             ]
         },
         {
             text: '5000 x 1100',
-            level: 2,
             hash: "test2",
+            active: false,
             children: []
         },
         {
             text: '6000 x 1100',
-            level: 2,
             hash: "test3",
+            active: false,
             children: []
         }
     ];
 
-    const [activeState, setActiveState] = React.useState(null);
-
-
-    const itemLink = (item: TImageResolutionsData, secondary: boolean = false) => (
+    const ItemLink = (item: TImageResolutionsData, secondary: boolean = false) => (
         <MuiLink
             display="block"
-            color={activeState === item.hash ? 'textPrimary' : 'textSecondary'}
+            color={item.active ? 'textPrimary' : 'textSecondary'}
             underline="none"
             className={clsx(
                 classes.item,
-                {[classes.secondaryItem]: secondary},
-                activeState === item.hash ? classes.active : undefined,
+                {
+                    [classes.secondaryItem]: secondary,
+                    [classes.active]: item.active
+                },
             )}
         >
             <span dangerouslySetInnerHTML={{__html: item.text}}/>
@@ -115,19 +114,19 @@ export const ImageResolutions: FunctionComponent = () => {
 
     return (
         <nav className={classes.root} aria-label={'pageTOC'}>
-            {itemsServer.length > 0 ? (
+            {tocItems.length > 0 ? (
                 <React.Fragment>
                     <Typography gutterBottom className={classes.contents}>
                         {'Table Of Contents'}
                     </Typography>
                     <Typography component="ul" className={classes.ul}>
-                        {itemsServer.map(item2 => (
-                            <li key={item2.text}>
-                                {itemLink(item2)}
-                                {item2.children.length > 0 ? (
+                        {tocItems.map(item => (
+                            <li key={item.text}>
+                                {ItemLink(item)}
+                                {item.children.length > 0 ? (
                                     <ul className={classes.ul}>
-                                        {item2.children.map(item3 => (
-                                            <li key={item3.text}>{itemLink(item3, true)}</li>
+                                        {item.children.map(subItem => (
+                                            <li key={subItem.text}>{ItemLink(subItem, true)}</li>
                                         ))}
                                     </ul>
                                 ) : null}
