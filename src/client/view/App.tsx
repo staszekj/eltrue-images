@@ -3,7 +3,6 @@ import {SearchCompoment} from './search-component'
 import {ImagesListComponent} from './images-list-component'
 import {useDispatch, useSelector} from "react-redux";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {appInitAction} from "./app-actions";
 import {OneImageComponent} from "./one-image-component";
 import {getOneImage, isOneImageShow} from "./app-selectors";
