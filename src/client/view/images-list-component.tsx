@@ -7,9 +7,10 @@ import {Element, scroller} from 'react-scroll';
 
 import './images-list-component.scss'
 import styled from "styled-components";
+import {SCROLL_CONTAINER_ID} from "./App";
 
 const ImageListStl = styled.div`
-  padding-top: 64px;
+  padding-top: 10px;
 `;
 
 export const ImagesListComponent: FunctionComponent<{}> = () => {
@@ -18,7 +19,7 @@ export const ImagesListComponent: FunctionComponent<{}> = () => {
     const selected = founded[arrayId];
     useEffect(() => {
         if(selected) {
-            scroller.scrollTo(selected.id, {offset: -70})
+            scroller.scrollTo(selected.id, {offset: -10, containerId: SCROLL_CONTAINER_ID})
         }
     }, [selected]);
     return (
