@@ -4,26 +4,30 @@ import {getFoundImages, getArrayId} from './app-selectors'
 import _ from 'lodash';
 import {TileImageComponent} from "./tile-image-component";
 import {Element, scroller} from 'react-scroll';
+import clsx from 'clsx';
 
 import './images-list-component.scss'
-import styled from "styled-components";
 import {SCROLL_CONTAINER_ID} from "./App";
+import {makeStyles} from "@material-ui/core/styles";
 
-const ImageListStl = styled.div`
-  padding-top: 10px;
-`;
+const useStyles = makeStyles({
+    ImageList: {
+        paddingTop: '10px'
+    }
+});
 
 export const ImagesListComponent: FunctionComponent<{}> = () => {
     const founded = useSelector(getFoundImages);
     const arrayId = useSelector(getArrayId);
     const selected = founded[arrayId];
+    const classes = useStyles();
     useEffect(() => {
-        if(selected) {
+        if (selected) {
             scroller.scrollTo(selected.id, {offset: -10, containerId: SCROLL_CONTAINER_ID})
         }
     }, [selected]);
     return (
-        <ImageListStl className={"images-list-component"}>
+        <div className={clsx(classes.ImageList, "images-list-component")}>
             {_.map(founded, (i, arrayId) => {
                 const title = i.author;
                 const info = `${i.width} x ${i.height}`;
@@ -41,6 +45,6 @@ export const ImagesListComponent: FunctionComponent<{}> = () => {
                     </Element>
                 )
             })}
-        </ImageListStl>
+        </div>
     )
 };

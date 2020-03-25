@@ -9,45 +9,48 @@ import {getOneImage, getTheme, isOneImageShow} from "./app-selectors";
 import {Element} from 'react-scroll';
 
 import './app.scss'
-import styled from "styled-components";
+import {makeStyles} from "@material-ui/core/styles";
+import {TThemeReducer} from "../redux/theme-reducer";
 
-const MainVertical = styled.div`
-    display: flex;
-    flex-direction: column;
-    height: calc(100vh - 20px)
-`;
+const useStyles = makeStyles((theme: TThemeReducer) => {
+    return {
+        MainVertical: {
+            display: 'flex',
+            flexDirection: 'column',
+            height: 'calc(100vh - 20px)'
+        },
+        Header: {
+            height: '70px',
+        },
+        Main: {
+            flex: 1,
+            position: 'relative',
+            backgroundColor: theme.palette.background.level2
+        },
+        ScrollContainer: {
+            position: 'absolute',
+            height: '100%',
+            overflowY: 'auto'
+        },
+        FooterContent: {
+            paddingTop: '10px',
+            paddingLeft: '10px',
+            fontSize: '10px',
+            fontWeight: 200
+        }
+    }
+});
 
-const HeaderStl = styled.div`
-    height: 70px;
-`;
-
-const MainStl = styled.div`
-    flex: 1;
-    position: relative;
-    background-color: lightgray;
-`;
-
-const ScrollContainerStl = styled(Element)`
-        position: absolute;
-        height: 100%;
-        overflow-y: auto;
-`;
-
-const FooterContentStl = styled.div`
-    padding-top: 10px;
-    padding-left: 10px;
-    font-size: 10px;
-    font-weight: 200;
-`;
-
-export const SCROLL_CONTAINER_NAME =  "SCROLL_CONTAINER_NAME";
-export const SCROLL_CONTAINER_ID =  "SCROLL_CONTAINER_ID";
+export const SCROLL_CONTAINER_NAME = "SCROLL_CONTAINER_NAME";
+export const SCROLL_CONTAINER_ID = "SCROLL_CONTAINER_ID";
 
 const App: FunctionComponent<{}> = () => {
 
     const dispatch = useDispatch();
     const oneImage = useSelector(getOneImage);
     const showOneImage = useSelector(isOneImageShow);
+    const theme = useSelector(getTheme);
+    const classes = useStyles(theme);
 
     useEffect(() => {
         dispatch(appInitAction());
@@ -61,19 +64,19 @@ const App: FunctionComponent<{}> = () => {
     }
 
     return (
-        <MainVertical>
-            <HeaderStl>
+        <div className={classes.MainVertical}>
+            <div className={classes.Header}>
                 <SearchCompoment/>
-            </HeaderStl>
-            <MainStl>
-                <ScrollContainerStl name={SCROLL_CONTAINER_NAME} id={SCROLL_CONTAINER_ID}>
+            </div>
+            <div className={classes.Main}>
+                <Element className={classes.ScrollContainer} name={SCROLL_CONTAINER_NAME} id={SCROLL_CONTAINER_ID}>
                     <ImagesListComponent/>
-                </ScrollContainerStl>
-            </MainStl>
-            <FooterContentStl>
+                </Element>
+            </div>
+            <div className={classes.FooterContent}>
                 {"Version: 0.0.2"}
-            </FooterContentStl>
-        </MainVertical>
+            </div>
+        </div>
     )
 };
 
