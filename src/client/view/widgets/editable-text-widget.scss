@@ -9,6 +9,7 @@
   }
 
   input {
+    font-size: 18px;
     border-radius: 15px 50px 30px;
     border: 2px solid black;
     padding: 20px;
@@ -25,8 +26,8 @@
 
     .spinner {
       position: absolute;
-      right: 20px;
-      top: 20px;
+      right: 25px;
+      top: 25px;
 
 
       &::before {

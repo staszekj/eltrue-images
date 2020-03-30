@@ -25,6 +25,7 @@ export const EditableText: FunctionComponent<TEditableTextWidget> = (props) => {
     }
 
     const spinnerEl = isSpinner && <div className={"spinner"}/>;
+    const MAX_LEN = 18;
 
     return (
         <div className={classnames("editable-text", classNames)}>
@@ -34,6 +35,8 @@ export const EditableText: FunctionComponent<TEditableTextWidget> = (props) => {
                        readOnly={isReadOnly}
                        value={text}
                        autoFocus={true}
+                       placeholder={`max: ${MAX_LEN} characters`}
+                       maxLength={MAX_LEN}
                        onChange={(e) => onChange && onChange(e.target.value)}
                        onKeyUp={(e) => {
                            if (e.keyCode === 13) {

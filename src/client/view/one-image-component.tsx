@@ -52,16 +52,22 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
     const onForwardBtnClick = () => dispatch(oneImageComponentForwardClickAction({arrayId: nextArrayId}));
     const onPrevBtnClick = () => dispatch(oneImageComponentBackwardClickAction({arrayId: prevArrayId}));
 
-    const swapEditMode = () => {
+    const openEditMode = () => {
+        if (isAuthorEditMode){
+            return;
+        }
         setCurrentAuthor(image.author);
-        setAuthorEditMode(!isAuthorEditMode)
+        setAuthorEditMode(true);
     };
     const onEnterTitle = () => {
         setAuthorEditMode(false);
         dispatch(authorUpdateAsyncAction.request({id: image.id, author: currentAuthor}));
     };
 
-    const EditableTextString = isAuthorEditMode || isRequestPending ? currentAuthor : image.author;
+    const editableTextString = isAuthorEditMode || isRequestPending ? currentAuthor : image.author;
+    const editButtonWithClickHandlerEl = (<div key={"editButtonWithClickHandler"} className={classnames("edit-icon")} onClick={() => openEditMode()}><MdEdit/></div>);
+    const editButtonWithoutClickHandlerEl = (<div key={"editButtonWithoutClickHandler"} className={classnames("edit-icon")}><MdEdit/></div>);
+    const editButtonEl = isAuthorEditMode ? editButtonWithoutClickHandlerEl : editButtonWithClickHandlerEl;
     const spinnerEl = !isImageFullyLoaded ? (
         <div className={classnames("spinner-icon")}>
             <div className={"spinner"}/>
@@ -96,20 +102,20 @@ export const OneImageComponent: FunctionComponent<TOneImageComponentProp> = ({im
             <div className={"one-image"}>
                 <div className={classnames("toolbar")}>
                     <div className={classnames("close-icon")} onClick={() => onCloseBtnClick()}><MdClose/></div>
-                    <div className={classnames("edit-icon")} onClick={() => swapEditMode()}><MdEdit/></div>
+                    {editButtonEl}
                     <div className={classnames("delete-icon")} onClick={() => onDeleteBtnClickHandler()}><MdDelete/>
                     </div>
                     {spinnerEl}
                 </div>
                 <img ref={imgRef} src={image.imageV300Url} alt={image.author}/>
                 <div className={"details"}>
-                    <EditableText text={EditableTextString} isInput={isAuthorEditMode || isRequestPending}
+                    <EditableText text={editableTextString} isInput={isAuthorEditMode || isRequestPending}
                                   isReadOnly={isRequestPending}
                                   isSpinner={isRequestPending}
                                   classNames={classnames("details-content", "title")}
                                   onEnter={onEnterTitle}
                                   onChange={(text) => setCurrentAuthor(text)}
-                                  onTextClick={() => swapEditMode()}>
+                                  onTextClick={() => openEditMode()}>
                     </EditableText>
                     <span className={classnames("details-content", "info")}>{`${image.width} x ${image.height}`}</span>
                 </div>
