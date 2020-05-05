@@ -5,8 +5,6 @@ import * as serviceWorker from "./serviceWorker";
 import { MuiThemeProvider, StylesProvider } from "@material-ui/core";
 import { createHashHistory } from "history";
 
-import App from "./view/App";
-
 import { rootSaga } from "./saga/root-saga";
 import { rootReducer } from "./redux/root-reducer";
 import { Provider, useSelector } from "react-redux";
@@ -15,6 +13,7 @@ import { getTheme } from "./view/app-selectors";
 import { routerMiddleware } from "connected-react-router";
 
 import { ConnectedRouter } from "connected-react-router";
+import { AppRoutes } from "./routes";
 
 export const history = createHashHistory();
 
@@ -42,7 +41,7 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <ElTrueMuiProvider>
-        <App />
+        <AppRoutes />
       </ElTrueMuiProvider>
     </ConnectedRouter>
   </Provider>,
